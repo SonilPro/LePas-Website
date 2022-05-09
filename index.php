@@ -48,6 +48,34 @@
       </div>
     </div>
   </div>
+  <section class="gallery-wrapper">
+    <div class="gallery">
+      <h2>Novi članovi</h2>
+      <div class="cards">
+        <div class="card">
+          <a href="#">
+            <div class="description">
+              <h3>Ime</h3>
+            </div>
+          </a>
+        </div>
+        <div class="card" style="background-image: url(img/Cat.png)">
+          <a href="#">
+            <div class="description">
+              <h3>Ime</h3>
+            </div>
+          </a>
+        </div>
+        <div class="card" style="background-image: url(img/Cat.png)">
+          <a href="#">
+            <div class="description">
+              <h3>Ime</h3>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
   <section class="news-wrapper">
     <h2>Novosti</h2>
     <div class="news">
