@@ -9,6 +9,7 @@
             <a href="contact.php"> Kontakt </a>
             <a href="adminpage.php"> Admin </a>
         </div>
+        <hr>
         <a href="index.html">
             <img src="img/logo.png" class="logo" />
         </a>

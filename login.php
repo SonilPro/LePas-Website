@@ -58,12 +58,11 @@ if (isset($_SESSION['userType'])) {
         include_once('db/connection.php');
         $name = test_input($_POST["name"]);
         $password = test_input($_POST["password"]);
-        $stmt = $conn->prepare("SELECT * FROM users WHERE name = :name");
-        $stmt->bindParam(':name', $name);
-        $stmt->execute();
-        $users = $stmt->fetchAll();
-
-        foreach ($users as $user) {
+        $stmt = mysqli_prepare($conn, "SELECT * FROM users WHERE name = ?");
+        mysqli_stmt_bind_param($stmt, "s", $name);
+        mysqli_stmt_execute($stmt);
+        $result = mysqli_stmt_get_result($stmt);
+        while ($user = mysqli_fetch_assoc($result)) {
             if (password_verify($password, $user['password'])) {
                 if ($user['isAdmin'] != null) {
                     $_SESSION['userType'] = "admin";
@@ -74,6 +73,7 @@ if (isset($_SESSION['userType'])) {
                 die();
             }
         }
+        mysqli_close($conn);
         echo "<script language='javascript'>";
         echo "alert('KRIVO IME ILI LOZINKA');";
         echo "</script>";

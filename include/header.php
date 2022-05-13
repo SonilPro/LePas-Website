@@ -4,8 +4,7 @@ $page = substr($page, 0, strpos($page, "."));
 <div style="height: 85px;">
     <header>
         <nav>
-            <a href="index.html">
-
+            <a href="index.php">
                 <img src="img/logo.png" class="logo" />
             </a>
             <ul class="nav-links">

@@ -1,21 +1,8 @@
 <?php
 
-/** @var \PDO  $conn = ""*/;
+$servername = "localhost:3306";
+$dbname = "lepas";
+$username = "root";
+$password = "1234";
 
-try {
-    $servername = "localhost:3306";
-    $dbname = "lepas";
-    $username = "root";
-    $password = "1234";
-
-    $conn = new PDO(
-        "mysql:host=$servername; dbname=$dbname;charset=utf8mb4",
-        $username,
-        $password
-    );
-
-    $conn->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
-    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-} catch (PDOException $e) {
-    echo "Connection failed: " . $e->getMessage();
-}
+$conn = mysqli_connect($servername, $username, $password, $dbname) or die("Connection failed: " . mysqli_connect_error());
