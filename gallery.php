@@ -19,12 +19,11 @@
       </a>
     </div>
   </aside>
-  <div class="imageHeader" id="imageHeader1">
+  <div class="header-title">
     <h1>Galerija</h1>
   </div>
   <section class="gallery-wrapper">
     <div class="gallery">
-      <h2>Galerija</h2>
       <div class="cards">
         <div class="card">
           <a href="#">

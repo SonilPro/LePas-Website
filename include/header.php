@@ -5,7 +5,7 @@ $page = substr($page, 0, strpos($page, "."));
     <header>
         <nav>
             <a href="index.php">
-                <img src="img/logo.png" class="logo" />
+                <img src="img/lepas_logo.png" class="logo" />
             </a>
             <ul class="nav-links">
                 <input type="checkbox" id="checkbox_toggle" autocomplete="off" />

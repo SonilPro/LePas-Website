@@ -7,6 +7,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
     <link rel="stylesheet" href="style/style.css" />
+    <script type="text/javascript">
+        window.addEventListener("scroll", reveal);
+
+        function reveal() {
+            var reveals = document.querySelectorAll('.reveal');
+
+            for (var i = 0; i < reveals.length; i++) {
+                var windowheight = window.innerHeight;
+                var revealtop = reveals[i].getBoundingClientRect().top;
+                var revealpoint = 150;
+
+                if (revealtop < windowheight - revealpoint) {
+                    reveals[i].classList.add('active');
+                }
+            }
+        }
+    </script>
 </head>
 
 <body>
@@ -18,45 +35,58 @@
             </a>
         </div>
     </aside>
-    <div class="imageHeader" id="imageHeader1">
+    <div class="header-title">
         <h1>O nama</h1>
     </div>
-
     <section class="about-wrapper ">
         <div class="about">
-            <h2>O nama</h2>
-            <div class="text">
-                <p>
-                    LePas je mlada udruga za dobrobit i zaštitu životinja koja je službeno s radom započela 11. rujna
-                    2020. godine, no članovi udruge već su godinama aktivni i vrlo iskusni volonteri koji iza sebe imaju
-                    jako velik broj spašenih života i udomljenih životinja.
-                </p>
-                <h3>Pomozi</h3>
-                <p>
-                    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Consectetur eum ipsa qui dolores at
-                    tempore
-                    accusamus facere non temporibus laudantium, magnam maxime quis commodi fugit alias voluptate
-                    adipisci
-                    cupiditate facilis.
-                </p>
-                <h3>Donacije možeš uplatiti na:</h3>
-                <p>
-                    Udruga za dobrobit i zaštitu životinja LePas<br />HR9623400091110790897 <br />model: 00 ili
-                    99<br />poziv na
-                    broj: datum uplate<br />
-                    SWIFT(bic): PBZGHR2X (za uplate iz inozemstva)<br />
-                    Opis: DONACIJE
-                </p>
-                <h3>Osim novčanih donacija možete nam pomoći i</h3>
-                <ul>
-                    <li>zdjelicama za hranu/vodu</li>
-                    <li>dekama, ručnicima, krpama…</li>
-                </ul>
-                <p>
-                    Za ostale donacije javite nam se na e-mail: udruga@lepas.hr radi dogovora oko preuzimanja donacije.
-                    Donacije
-                    također možete poslati putem pošte na adresu: .
-                </p>
+            <div class="content ">
+                <div class="text">
+                    <h2>O udruzi</h2>
+                    <p>
+                        LePas je mlada udruga za dobrobit i zaštitu životinja koja je službeno s radom započela 11. rujna
+                        2020. godine, no članovi udruge već su godinama aktivni i vrlo iskusni volonteri koji iza sebe imaju
+                        jako velik broj spašenih života i udomljenih životinja.
+                    </p>
+                </div>
+                <div class="image">
+                    <img src="img/122505410_348896512862412_2217686795852213405_n.jpg">
+                </div>
+            </div>
+            <div class="content">
+                <div class="image">
+                    <img src="img/about3.jpg">
+                </div>
+                <div class="text reveal">
+                    <h2>Cilj udruge</h2>
+                    <p>
+                        Naš cilj i ključni dio naše misije je pomaganje životinjama od kojih drugi okreću glave jer su bolesne, teško udomljive ili stare (skupina na koju smo posebno slabi). Zbog toga smo početkom 2021. godine, nakon što je dio Hrvatske pogodio jedan od najrazornijih potresa ikad zabilježenih, iz zahvaćenih područja preuzeli 94 psa među kojima je najveći postotak upravo ovih “neprimjetnih”.
+                    </p>
+                </div>
+            </div>
+            <div class="content">
+                <div class="text reveal">
+                    <h2>Članovi</h2>
+                    <p>
+                        Trenutno u udruzi brojimo 4 aktivna člana, dok na skrbi imamo 80-ak pasa i mačaka. Većina ih se nalazi u našem utočištu, koje dijele s dvoje volontera, našom predsjednicom Tihanom te njenim zaručnikom Damirom.
+                    </p>
+                </div>
+                <div class="image">
+                    <img src="img/about2.JPEG">
+                </div>
+            </div>
+            <div class="content">
+                <div class="image">
+                    <img src="img/about4.JPEG">
+                </div>
+                <div class="text reveal">
+                    <h2>Uspjesi</h2>
+                    <p>
+                        Od početka rada, na skrb smo preuzeli oko 350 pasa i mačaka. Velik smo broj njih već i udomili, no svi koji su nam još uvijek na skrbi zahtijevaju velik angažman, kao i velike financijske izdatke.
+                        Poziv koji smo, uz naše poslove i privatne obaveze, preuzeli na sebe ispunjava nas u potpunosti i zaista rado i srčano radimo ovo što radimo, no svjesni smo da nam je u logistici ipak potrebna pomoć u vidu donacija jer nam je na prvom mjestu uvijek činjenica da svaku životinju koju preuzmemo na skrb moramo zbrinuti na kvalitetan način te joj omogućiti sve što joj je potrebno.
+                    </p>
+                </div>
+
             </div>
         </div>
     </section>

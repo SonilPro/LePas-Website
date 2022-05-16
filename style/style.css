@@ -114,7 +114,6 @@ input[type="checkbox"]:checked ~ .menu {
 }
 .footer a {
   position: relative;
-
 }
 
 .footer .links a:before {
@@ -135,9 +134,8 @@ input[type="checkbox"]:checked ~ .menu {
   visibility: visible;
   transform: scaleX(1);
 }
-.footer hr{
+.footer hr {
   width: 99vw;
-
 }
 
 .logo {
@@ -213,19 +211,13 @@ section h1 {
   opacity: 100%;
 }
 
-#imageHeader1 {
-  background-image: url("../img/pets-3715733_1920.jpg");
-}
-
-#aboutImageHeader1 {
-  background-image: url(../img/122505410_348896512862412_2217686795852213405_n.jpg);
-}
-
 .imageHeader {
   background-repeat: no-repeat;
   background-size: cover;
   background-position: bottom;
+
   background-attachment: fixed;
+  background-image: url("../img/mainthumb (2).JPEG");
   height: 700px;
   position: relative;
   z-index: -1;
@@ -233,17 +225,25 @@ section h1 {
   display: flex;
   flex-direction: column;
   justify-content: start;
-  align-items: flex-end;
+  align-items: center;
   background-color: #f6aabe;
-  /*background-color: rgba(0, 0, 0, 0.347);
-  background-blend-mode: color;*/
-  padding-top: 100px;
+  background-color: rgba(0, 0, 0, 0.397);
+  background-blend-mode: color;
+  justify-content: center;
+}
+#imageHeader1 {
+  background-image: url("../img/thumb.JPEG");
+}
+#imageHeader2 {
+  background-image: url("../img/dogSlider1.jpg");
+  height: 300px;
 }
 
 .imageHeader h1 {
   font-size: 100px;
   color: white;
   padding: 5px 30px;
+  text-align: center;
 }
 
 .imageHeader p {
@@ -251,9 +251,18 @@ section h1 {
   color: white;
   font-weight: 500;
   padding: 5px 30px;
-  text-align: right;
-  max-width: 600px;
+  text-align: center;
+  max-width: 700px;
   line-height: unset;
+}
+.header-title {
+  height: 200px;
+  background-color: #f6aabe;
+  font-size: 40px;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 section {
@@ -352,7 +361,7 @@ section {
   border: 1px solid rgb(155, 155, 155);
   padding-bottom: 20px;
 }
-.news-block:hover{
+.news-block:hover {
   box-shadow: 0 0 10px rgba(136, 136, 136, 0.671);
 }
 .news-block .block-wrapper {
@@ -360,7 +369,7 @@ section {
   width: 100%;
   white-space: normal;
 }
-.news-block .text{
+.news-block .text {
   padding: 0px 10px;
   gap: 5px;
 }
@@ -384,12 +393,12 @@ section {
   text-align: center;
 }
 
-.news-block .title{
+.news-block .title {
   font-size: 27px;
   color: black;
 }
 
-.news-block:hover .title{
+.news-block:hover .title {
   color: #fa4b7a;
 }
 
@@ -640,19 +649,52 @@ textarea:focus-visible {
   align-items: center;
   padding: 20px 0;
   background-color: white;
+  overflow: hidden;
 }
 .about {
-  max-width: 1000px;
+  max-width: 1500px;
   display: flex;
   flex-direction: column;
   text-align: left;
-  gap: 40px;
+  gap: 60px;
   padding: 0px 20px;
 }
-.about .text {
+.about .content {
   display: flex;
-  flex-direction: column;
   gap: 20px;
+}
+.about .content .text {
+  width: 50%;
+  border: 1px solid black;
+  height: 100%;
+  padding: 15px;
+  margin-top: 50px;
+}
+.about .content .text h2 {
+  text-align: left;
+  font-size: 30px;
+}
+.about .content img {
+  width: 100%;
+}
+.about .content .image {
+  width: 50%;
+}
+.about .content:nth-child(odd) .reveal {
+  position: relative;
+  transform: translateX(-100%);
+  opacity: 0;
+  transition: transform 2s ease, opacity 2s ease;
+}
+.about .content:nth-child(even) .reveal {
+  position: relative;
+  transform: translateX(100%);
+  opacity: 0;
+  transition: transform 2s ease, opacity 2s ease;
+}
+.about .content .reveal.active {
+  opacity: 1;
+  transform: unset;
 }
 
 @media (max-width: 1000px) {
@@ -761,9 +803,25 @@ textarea:focus-visible {
     background-position-y: -150px;
     height: 500px;
   }*/
+
+  .about .content {
+    flex-direction: column;
+  }
+  .about .content .text {
+    width: 100%;
+    margin: unset;
+  }
+  .about .content .image {
+    width: 100%;
+  }
+  .about .content:nth-child(odd) {
+    flex-direction: column-reverse;
+  }
   .imageHeader {
     align-items: center;
     flex-wrap: wrap-reverse;
+    height: 500px;
+    background-position-y: -200px;
   }
 
   .imageHeader h1 {

@@ -19,12 +19,11 @@
       </a>
     </div>
   </aside>
-  <div class="imageHeader" id="imageHeader1">
+  <div class="header-title">
     <h1>Donacije</h1>
   </div>
   <section class="donations-wrapper">
     <div class="donations">
-      <h2>Donacije</h2>
       <div class="text">
         <p>
           Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laborum quod, nobis doloribus facere ex qui

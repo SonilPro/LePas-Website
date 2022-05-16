@@ -20,11 +20,10 @@
       </a>
     </div>
   </aside>
-  <div class="imageHeader" id="imageHeader1">
+  <div class="header-title">
     <h1>Kontakt</h1>
   </div>
   <section class="contact-wrapper">
-    <h2>Kontakt</h2>
     <div class="contact">
       <div class="form">
         <form>

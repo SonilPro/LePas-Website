@@ -19,11 +19,10 @@
       </a>
     </div>
   </aside>
-  <div class="imageHeader" id="imageHeader1">
-    <h1>Novosti</h1>
+  <div class="header-title">
+    <h1>O nama</h1>
   </div>
   <section class="news-wrapper">
-    <h2>Novosti</h2>
     <div class="news">
       <a class="news-block" href="#">
         <div class="block-wrapper">
