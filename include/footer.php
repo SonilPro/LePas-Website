@@ -11,7 +11,7 @@
             <a href="adminpage.php"> Admin </a>
         </div>
         <a href="index.php">
-            <img src="img/lepas_logo.png" class="logo" />
+            <img src="img/lepas_logots.png" class="logo" />
         </a>
         <p>© 2022 LaPas</p>
     </div>

@@ -5,17 +5,24 @@
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Document</title>
+  <title>LePas - udruga za dobrobit i zaštitu životinja</title>
   <script src="https://kit.fontawesome.com/4705ced167.js" crossorigin="anonymous"></script>
   <link rel="stylesheet" href="style/style.css" />
+  <link rel="shortcut icon" href="img/lepas_logo.ico" type="image/x-icon">
+  <script src="js/counterup.js"></script>
 </head>
 
 <body>
   <?php include('include/header.php'); ?>
   <aside>
     <div class="socials">
-      <a href="#">
-        <img src="img/facebook.gif" alt="facebook" />
+      <a href="https://www.facebook.com/lepas.udruga/" target="_blank" style="background-color: #4267B2;">
+        <p>Posjetite nas na<br>Facebooku</p>
+        <i class="fa fa-facebook" aria-hidden="true"></i>
+      </a>
+      <a href="https://www.instagram.com/lepas_udruga/" target="_blank" style="background-color: #E4405F;">
+        <p>Posjetite nas na <br>Instagramu</p>
+        <i class="fa fa-instagram" aria-hidden="true"></i>
       </a>
     </div>
   </aside>
@@ -28,7 +35,7 @@
     <h2>Kako možeš pomoći</h2>
     <div class="options">
       <div class="option" style="
-            background-image: url(https://media.4-paws.org/1/4/2/1/1421772709675ddb3eed25eee3a8c78ddf829671/VIER_PFOTEN_2020-12-17_00023-912x684-533x400.jpg);
+            background-image: url(img/option_adopt.JPEG);
           ">
         <span class="icon">
           <i class="fas fa-paw fa-3x fa-inverse" aria-hidden="true"></i>
@@ -38,7 +45,7 @@
         <a class="button" href="#">POSVOJI</a>
       </div>
       <div class="option" style="
-            background-image: url(https://media.4-paws.org/1/4/2/1/1421772709675ddb3eed25eee3a8c78ddf829671/VIER_PFOTEN_2020-12-17_00023-912x684-533x400.jpg);
+            background-image: url(img/option_donate.jpg);
           ">
         <span class="icon">
           <i class="fas fa-hand-holding-medical fa-3x fa-inverse" aria-hidden="true"></i>
@@ -47,6 +54,16 @@
         <p>Stvorimo bolji svijet za životinje</p>
         <a class="button" href="donation.php">DONIRAJ</a>
       </div>
+      <div class="option" style="
+            background-image: url(img/option_volounter.jpg);
+          ">
+        <span class="icon">
+          <i class="fas  fa-hand-paper fa-3x fa-inverse" aria-hidden="true" style="position: relative; right:2px"></i>
+        </span>
+        <h3>VOLONTIRAJ</h3>
+        <p>Pomozi našim njuškicama</p>
+        <a class="button" href="donation.php">VOLONTIRAJ</a>
+      </div>
     </div>
   </div>
   <hr>
@@ -54,31 +71,48 @@
     <div class="gallery">
       <h2>Novi članovi</h2>
       <div class="cards">
-        <div class="card">
-          <a href="#">
-            <div class="description">
-              <h3>Ime</h3>
+        <?php
+        define('_DEFVAR', 1);
+        include('db/connection.php');
+        if (!$conn) {
+          echo "<script language='javascript'>";
+          echo "console.log(\"" . mysqli_connect_error() . "\");";
+          echo "</script>";
+        } else {
+          $result = mysqli_query($conn, "SELECT * FROM animals ORDER BY inputTimestamp DESC LIMIT 3");
+          for ($i = 0; $i < min(mysqli_num_rows($result), 3); $i++) {
+            $row = mysqli_fetch_assoc($result);
+            echo "
+            <div class='card' style='background-image: url(" . $row["mainImage"] . ")'>
+              <a href='#'>
+                <div class='description'>
+                  <h3>" . $row["name"] . "</h3>
+                </div>
+              </a>
             </div>
-          </a>
-        </div>
-        <div class="card" style="background-image: url(img/Cat.png)">
-          <a href="#">
-            <div class="description">
-              <h3>Ime</h3>
-            </div>
-          </a>
-        </div>
-        <div class="card" style="background-image: url(img/Cat.png)">
-          <a href="#">
-            <div class="description">
-              <h3>Ime</h3>
-            </div>
-          </a>
-        </div>
+            ";
+          }
+          mysqli_close($conn);
+        }
+
+        ?>
       </div>
     </div>
   </section>
-  <hr>
+  <section class="achievement-wrapper">
+    <div class="achievement">
+      <div>
+        <h2 class="count" data-number="200">0</h2>
+        <p>Ukupno udomljenih životinja</p>
+        <i class="fas  fa-bone fa-5x fa-inverse" aria-hidden="true" style="position: relative; right:2px"></i>
+      </div>
+      <div>
+        <h2 class="count" data-number="250">0</h2>
+        <p>Životinja za koje trenutno brinemo</p>
+        <i class="fas  fa-heart fa-5x fa-inverse" aria-hidden="true" style="position: relative; right:2px;"></i>
+      </div>
+    </div>
+  </section>
   <section class="news-wrapper">
     <h2>Novosti</h2>
     <div class="news">
@@ -127,7 +161,14 @@
           </div>
         </div>
       </a>
+
     </div>
+  </section>
+  <hr>
+  <section class="instagram-wrapper">
+    <div data-mc-src="6459abf6-4213-4a7d-8e22-06413a50a4a9#instagram"></div>
+    <script src="https://cdn2.woxo.tech/a.js#62876629205adf0021b8bf7a" async data-usrc></script>
+    <p></p>
   </section>
   <?php include('include/footer.php') ?>
 </body>

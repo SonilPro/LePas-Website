@@ -5,8 +5,9 @@
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Document</title>
+  <title>Vijesti | LePas</title>
   <script src="https://kit.fontawesome.com/4705ced167.js" crossorigin="anonymous"></script>
+  <link rel="shortcut icon" href="img/lepas_logo.ico" type="image/x-icon">
   <link rel="stylesheet" href="style/style.css" />
 </head>
 
@@ -14,13 +15,18 @@
   <?php include('include/header.php'); ?>
   <aside>
     <div class="socials">
-      <a href="#">
-        <img src="img/facebook.gif" alt="facebook" />
+      <a href="https://www.facebook.com/lepas.udruga/" target="_blank" style="background-color: #4267B2;">
+        <p>Posjetite nas na<br>Facebooku</p>
+        <i class="fa fa-facebook" aria-hidden="true"></i>
+      </a>
+      <a href="https://www.instagram.com/lepas_udruga/" target="_blank" style="background-color: #E4405F;">
+        <p>Posjetite nas na <br>Instagramu</p>
+        <i class="fa fa-instagram" aria-hidden="true"></i>
       </a>
     </div>
   </aside>
   <div class="header-title">
-    <h1>O nama</h1>
+    <h1>Vijesti</h1>
   </div>
   <section class="news-wrapper">
     <div class="news">

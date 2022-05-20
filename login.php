@@ -10,6 +10,7 @@ if (isset($_SESSION['userType'])) {
         die();
     }
 }
+define('_DEFVAR', 1);
 ?>
 
 <!DOCTYPE html>
@@ -19,8 +20,9 @@ if (isset($_SESSION['userType'])) {
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Login | LePas</title>
     <link rel="stylesheet" href="style/style.css" />
+    <link rel="shortcut icon" href="img/lepas_logo.ico" type="image/x-icon">
 </head>
 
 

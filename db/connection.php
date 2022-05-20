@@ -1,8 +1,15 @@
 <?php
-
-$servername = "localhost:3306";
+error_reporting(E_ERROR | E_PARSE);
+if (!defined('_DEFVAR')) {
+    echo "<script>
+                alert('ZABRANJEN PRISTUP');
+                window.location.href = 'login.php';
+            </script>";
+    die('Restricted Access');
+}
+$servername = "localhost";
 $dbname = "lepas";
 $username = "root";
 $password = "1234";
 
-$conn = mysqli_connect($servername, $username, $password, $dbname) or die("Connection failed: " . mysqli_connect_error());
+$conn = mysqli_connect($servername, $username, $password, $dbname);

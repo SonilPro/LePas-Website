@@ -5,8 +5,10 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>O nama | LePas</title>
+    <script src="https://kit.fontawesome.com/4705ced167.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="style/style.css" />
+    <link rel="shortcut icon" href="img/lepas_logo.ico" type="image/x-icon">
     <script type="text/javascript">
         window.addEventListener("scroll", reveal);
 
@@ -30,8 +32,13 @@
     <?php include('include/header.php'); ?>
     <aside>
         <div class="socials">
-            <a href="#">
-                <img src="img/facebook.gif" alt="facebook" />
+            <a href="https://www.facebook.com/lepas.udruga/" target="_blank" style="background-color: #4267B2;">
+                <p>Posjetite nas na<br>Facebooku</p>
+                <i class="fa fa-facebook" aria-hidden="true"></i>
+            </a>
+            <a href="https://www.instagram.com/lepas_udruga/" target="_blank" style="background-color: #E4405F;">
+                <p>Posjetite nas na <br>Instagramu</p>
+                <i class="fa fa-instagram" aria-hidden="true"></i>
             </a>
         </div>
     </aside>
@@ -50,7 +57,7 @@
                     </p>
                 </div>
                 <div class="image">
-                    <img src="img/122505410_348896512862412_2217686795852213405_n.jpg">
+                    <img src="img/about1.jpg">
                 </div>
             </div>
             <div class="content">
