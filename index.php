@@ -10,6 +10,23 @@
   <link rel="stylesheet" href="style/style.css" />
   <link rel="shortcut icon" href="img/lepas_logo.ico" type="image/x-icon">
   <script src="js/counterup.js"></script>
+  <script type="text/javascript">
+    window.addEventListener("scroll", reveal);
+
+    function reveal() {
+      var reveals = document.querySelectorAll('.reveal');
+
+      for (var i = 0; i < reveals.length; i++) {
+        var windowheight = window.innerHeight;
+        var revealtop = reveals[i].getBoundingClientRect().top;
+        var revealpoint = 150;
+
+        if (revealtop < windowheight - revealpoint) {
+          reveals[i].classList.add('active');
+        }
+      }
+    }
+  </script>
 </head>
 
 <body>
@@ -32,7 +49,10 @@
   </div>
   <hr>
   <div class="options-wrapper">
-    <h2>Kako možeš pomoći</h2>
+    <div class="section-title">
+      <div class="line reveal"></div>
+      <h2>Kako možeš pomoći</h2>
+    </div>
     <div class="options">
       <div class="option" style="
             background-image: url(img/option_adopt.JPEG);
@@ -68,8 +88,11 @@
   </div>
   <hr>
   <section class="gallery-wrapper">
-    <div class="gallery">
+    <div class="section-title">
+      <div class="line reveal"></div>
       <h2>Novi članovi</h2>
+    </div>
+    <div class="gallery">
       <div class="cards">
         <?php
         define('_DEFVAR', 1);
@@ -80,11 +103,11 @@
           echo "</script>";
         } else {
           $result = mysqli_query($conn, "SELECT * FROM animals ORDER BY inputTimestamp DESC LIMIT 3");
-          for ($i = 0; $i < min(mysqli_num_rows($result), 3); $i++) {
+          for ($i = 0; $i < mysqli_num_rows($result); $i++) {
             $row = mysqli_fetch_assoc($result);
             echo "
             <div class='card' style='background-image: url(" . $row["mainImage"] . ")'>
-              <a href='#'>
+              <a href='animalpage.php?id=" . $row["id"] . "'>
                 <div class='description'>
                   <h3>" . $row["name"] . "</h3>
                 </div>
@@ -94,7 +117,6 @@
           }
           mysqli_close($conn);
         }
-
         ?>
       </div>
     </div>
@@ -107,61 +129,48 @@
         <i class="fas  fa-bone fa-5x fa-inverse" aria-hidden="true" style="position: relative; right:2px"></i>
       </div>
       <div>
-        <h2 class="count" data-number="250">0</h2>
+        <h2 class="count" data-number="1500">0</h2>
         <p>Životinja za koje trenutno brinemo</p>
         <i class="fas  fa-heart fa-5x fa-inverse" aria-hidden="true" style="position: relative; right:2px;"></i>
       </div>
     </div>
   </section>
   <section class="news-wrapper">
-    <h2>Novosti</h2>
+    <div class="section-title">
+      <div class="line reveal"></div>
+      <h2>Novosti</h2>
+    </div>
     <div class="news">
-      <a class="news-block" href="#">
-        <div class="block-wrapper">
-          <img src="img/newsImg.jpg" alt="newsImg1" />
-          <div class="text">
-            <div class="date-wrapper">
-              <p class="date">25.12.2021</p>
+      <?php
+      include('db/connection.php');
+      if (!$conn) {
+        echo "<script language='javascript'>";
+        echo "console.log(\"" . mysqli_connect_error() . "\");";
+        echo "</script>";
+      } else {
+        $result = mysqli_query($conn, "SELECT * FROM articles ORDER BY inputTimestamp DESC LIMIT 3");
+        for ($i = 0; $i < mysqli_num_rows($result); $i++) {
+          $row = mysqli_fetch_assoc($result);
+          echo "
+          <a class='news-block' href='newspage.php?id=" . $row["id"] . "'>
+            <div class='block-wrapper'>
+              <div class='image' style='background-image: url(" . $row["image"] . ");'></div>
+              <div class='text'>
+                <div class='date-wrapper'>
+                  <p class='date'>" . date("j.n.Y.", strtotime($row["inputTimestamp"]))  . "</p>
+              </div>
+                <h3 class='title'>" . $row["title"] . "</h3>
+                <p class='summary'>
+                  " . $row["description"] . "
+                </p>
+              </div>
             </div>
-            <h3 class="title">Lorem ipsum</h3>
-            <p class="summary">
-              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Obcaecati in id architecto placeat voluptas quia
-              et, autem magni beatae necessitatibus adipisci quas, possimus eos non eligendi animi, quo illo reiciendis?
-            </p>
-          </div>
-        </div>
-      </a>
-      <a class="news-block" href="#">
-        <div class="block-wrapper">
-          <img src="img/newsImg.jpg" alt="newsImg1" />
-          <div class="text">
-            <div class="date-wrapper">
-              <p class="date">25.12.2021</p>
-            </div>
-            <h3 class="title">Lorem ipsum</h3>
-            <p class="summary">
-              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Obcaecati in id architecto placeat voluptas quia
-              et, autem magni beatae necessitatibus adipisci quas, possimus eos non eligendi animi, quo illo reiciendis?
-            </p>
-          </div>
-        </div>
-      </a>
-      <a class="news-block" href="#">
-        <div class="block-wrapper">
-          <img src="img/newsImg.jpg" alt="newsImg1" />
-          <div class="text">
-            <div class="date-wrapper">
-              <p class="date">25.12.2021</p>
-            </div>
-            <h3 class="title">Lorem ipsum</h3>
-            <p class="summary">
-              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Obcaecati in id architecto placeat voluptas quia
-              et, autem magni beatae necessitatibus adipisci quas, possimus eos non eligendi animi, quo illo reiciendis?
-            </p>
-          </div>
-        </div>
-      </a>
-
+          </a>
+            ";
+        }
+        mysqli_close($conn);
+      }
+      ?>
     </div>
   </section>
   <hr>

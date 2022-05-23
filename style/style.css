@@ -6,8 +6,8 @@
 
 body {
   font-family: Verdana, Arial, Tahoma, Serif;
+  overflow-x: hidden;
 }
-
 header {
   box-shadow: 0px 3px 10px rgb(107, 107, 107);
   background-color: white;
@@ -23,22 +23,33 @@ header {
   width: 100%;
   height: 85px;
 }
-
-h2 {
-  font-size: 40px;
-  text-align: center;
+h1 {
+  font-size: 6.5rem;
+  color: #1f2122;
 }
-
+h2 {
+  font-size: 2.5rem;
+  text-align: center;
+  color: #1f2122;
+}
+h3 {
+  font-size: 2.2rem;
+  color: #1f2122;
+}
+pre {
+  white-space: pre-wrap;
+  font-family: Verdana, Arial, Tahoma, Serif;
+}
 a {
   text-decoration: none;
-  font-size: 20px;
+  font-size: 1.25rem;
   white-space: nowrap;
 }
-
 p {
-  color: black;
+  color: #1f2122;
   font-weight: 300;
   line-height: 25px;
+  font-size: 1.25rem;
 }
 
 li {
@@ -158,7 +169,7 @@ input[type="checkbox"]:checked ~ .menu {
 }
 
 .dropdown a {
-  font-size: 20px;
+  font-size: 1.25rem;
 }
 
 .dropdown li + li {
@@ -179,7 +190,7 @@ input[type="checkbox"] {
 
 .hamburger {
   display: none;
-  font-size: 40px;
+  font-size: 2.5rem;
   user-select: none;
   cursor: pointer;
   color: black;
@@ -187,10 +198,6 @@ input[type="checkbox"] {
 
 section {
   text-align: center;
-}
-
-section h1 {
-  font-size: 60px;
 }
 
 .izbor {
@@ -220,7 +227,7 @@ section h1 {
 .socials p {
   color: white;
   width: 100px;
-  font-size: 11px;
+  font-size: 0.7rem;
   text-align: center;
   line-height: 20px;
   margin: 0 5px;
@@ -259,17 +266,15 @@ section h1 {
 }
 
 .imageHeader h1 {
-  font-size: 100px;
   color: white;
-  padding: 5px 30px;
+  padding: 0.1em 0em;
   text-align: center;
 }
 
 .imageHeader p {
-  font-size: 60px;
+  font-size: 2.6rem;
   color: white;
   font-weight: 500;
-  padding: 5px 30px;
   text-align: center;
   max-width: 700px;
   line-height: unset;
@@ -277,13 +282,14 @@ section h1 {
 .header-title {
   height: 200px;
   background-color: #f6aabe;
-  font-size: 40px;
   text-align: center;
   display: flex;
   align-items: center;
   justify-content: center;
 }
-
+.header-title h1 {
+  font-size: 2.7rem;
+}
 section {
   background-color: white;
 }
@@ -296,6 +302,7 @@ section {
   align-items: center;
   padding: 20px 0px;
   gap: 40px;
+  background-color: white;
 }
 
 .options-wrapper .options {
@@ -333,13 +340,11 @@ section {
 
 .option h3 {
   color: white;
-  font-size: 30px;
   font-weight: bolder;
 }
 
 .option p {
   color: white;
-  font-size: 20px;
   width: 70%;
 }
 
@@ -362,6 +367,7 @@ section {
   flex-direction: column;
   gap: 40px;
   padding-bottom: 40px;
+  background-color: white;
 }
 
 .news {
@@ -376,7 +382,6 @@ section {
 .news-block {
   text-align: left;
   width: 30%;
-  height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -387,9 +392,20 @@ section {
   box-shadow: 0 0 10px rgba(136, 136, 136, 0.671);
 }
 .news-block .block-wrapper {
-  position: relative;
   width: 100%;
+  height: 100%;
   white-space: normal;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.news-block .block-wrapper .image {
+  background-image: url(../img/newsImg.jpg);
+  background-position: center center;
+  background-size: cover;
+  min-height: 200px;
+  min-width: 350px;
 }
 .news-block .text {
   padding: 0px 10px;
@@ -397,18 +413,19 @@ section {
 }
 
 .news-block .date {
-  font-size: 14px;
+  font-size: 0.9rem;
 }
 
 .news-block img {
-  width: 100%;
+  max-width: 800px;
+  max-height: 200px;
 }
 
 .news-block p {
   line-height: 25px;
   color: black;
   font-weight: 100;
-  font-size: 16px;
+  font-size: 1rem;
 }
 
 .news h2 {
@@ -416,7 +433,7 @@ section {
 }
 
 .news-block .title {
-  font-size: 27px;
+  font-size: 1.5rem;
   color: black;
 }
 
@@ -444,14 +461,17 @@ footer {
   justify-content: center;
   align-items: center;
   padding-top: 20px;
-  font-size: 10px;
+  font-size: 0.2rem;
   background-color: #fff1f0;
   padding: 20px 0;
 }
 
 footer a {
-  font-size: 15px;
+  font-size: 1rem;
   color: #5f5f5f;
+}
+footer p {
+  font-size: 0.8rem;
 }
 
 .footer {
@@ -493,6 +513,7 @@ footer a {
   align-items: center;
   padding: 20px 0;
   background-color: rgb(248, 248, 248);
+  gap: 40px;
 }
 
 .gallery {
@@ -516,11 +537,15 @@ footer a {
   background-position: center center;
   background-size: cover;
   height: 200px;
+  border-radius: 10px;
 }
 
 .gallery .card a:hover .description {
   visibility: unset;
   background-color: rgba(0, 0, 0, 0.212);
+  font-size: unset;
+}
+.gallery .card a:hover .description h3 {
   font-size: unset;
 }
 
@@ -541,7 +566,11 @@ footer a {
   color: white;
   justify-content: center;
   align-items: center;
-  font-size: 0px;
+  font-size: 0rem;
+  border-radius: 10px;
+}
+.gallery .card .description h3 {
+  font-size: 0;
 }
 
 .contact-wrapper {
@@ -557,6 +586,12 @@ footer a {
 .contact {
   max-width: 1000px;
   display: flex;
+}
+.contact h3 {
+  font-size: 1.5rem;
+}
+.contact p {
+  font-size: 1rem;
 }
 
 .contact .form {
@@ -647,6 +682,12 @@ textarea:focus-visible {
   gap: 40px;
   padding: 0px 20px;
 }
+.donations h3 {
+  font-size: 1.5rem;
+}
+.donations p {
+  font-size: 1rem;
+}
 
 .donations li:before {
   content: "- ";
@@ -662,6 +703,7 @@ textarea:focus-visible {
   align-items: center;
   height: 500px;
   text-align: center;
+  background-color: white;
 }
 .login-wrapper .login-box {
   display: flex;
@@ -700,7 +742,11 @@ textarea:focus-visible {
 }
 .about .content .text h2 {
   text-align: left;
-  font-size: 30px;
+  font-size: 2rem;
+}
+.about .content .text p {
+  text-align: left;
+  font-size: 1rem;
 }
 .about .content img {
   width: 100%;
@@ -724,6 +770,7 @@ textarea:focus-visible {
   opacity: 1;
   transform: unset;
 }
+
 .achievement-wrapper {
   width: 100%;
   display: flex;
@@ -747,10 +794,11 @@ textarea:focus-visible {
   color: white;
 }
 .achievement h2 {
-  font-size: 60px;
+  font-size: 3rem;
+  color: white;
 }
 .achievement p {
-  font-size: 30px;
+  font-size: 1.8rem;
   color: white;
 }
 .instagram-wrapper {
@@ -764,7 +812,117 @@ textarea:focus-visible {
   background-color: rgb(248, 248, 248);
   width: 100%;
 }
-
+.animal-page-wrapper {
+  width: 100%;
+  padding: 20px 0;
+  background-color: white;
+  display: flex;
+  justify-content: center;
+}
+.animal-page-wrapper .main {
+  max-width: 1500px;
+  display: flex;
+  gap: 60px;
+  padding: 0px 20px;
+  flex: 1;
+}
+.animal-page-wrapper .main .description {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  background-color: #fde0e8;
+  padding: 20px;
+  border-radius: 10px;
+}
+.animal-page-wrapper .main .description h2 {
+  text-align: left;
+  color: #fa4b7a;
+}
+.animal-page-wrapper .main .description strong {
+  text-align: left;
+}
+.animal-page-wrapper .main .images {
+  width: 50%;
+}
+.animal-page-wrapper .main .images .image {
+  background-size: cover;
+  background-position: center center;
+  width: 80%;
+  height: 520px;
+  margin: 0 auto;
+}
+.animal-page-wrapper .main ul {
+  margin: 0 0 30px;
+  padding: 0 0 20px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+.animal-page-wrapper .main ul li {
+  list-style: none;
+  width: 45%;
+  /*display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;*/
+  display: flex;
+  /* -ms-flex-wrap: wrap; */
+  /* -webkit-box-pack: justify;
+  -moz-box-pack: justify;
+  -ms-flex-pack: justify; */
+  justify-content: space-between;
+  border-bottom: 2px dotted rgba(27, 28, 29, 0.5);
+  padding: 10px 0;
+}
+.section-title h2 {
+  background: inherit;
+  font-size: 1.25rem;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  padding: 0 40px;
+  position: relative;
+  z-index: 1;
+}
+.section-title {
+  position: relative;
+  background: inherit;
+}
+.section-title .line {
+  content: "";
+  background-color: #f77597;
+  width: 1280px;
+  height: 1px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  z-index: 0;
+}
+.section-title .reveal {
+  width: 10px;
+  transition: all 0.5s ease-in;
+}
+.section-title .reveal.active {
+  width: 1280px;
+}
+.news-page-wrapper {
+  width: 100%;
+  padding: 20px 0;
+  background-color: white;
+  display: flex;
+  justify-content: center;
+}
+.news-page-wrapper .main {
+  max-width: 1500px;
+  display: flex;
+  gap: 60px;
+  padding: 0px 20px;
+  flex: 1;
+  text-align: left;
+  flex-direction: column;
+  align-items: flex-start;
+}
 @media (max-width: 1000px) {
   nav {
     flex-direction: column;
@@ -892,16 +1050,6 @@ textarea:focus-visible {
     background-position-y: -200px;
   }
 
-  .imageHeader h1 {
-    font-size: 70px;
-    text-align: center;
-  }
-
-  .imageHeader p {
-    font-size: 40px;
-    text-align: center;
-  }
-
   .options {
     align-items: center;
     flex-direction: column;
@@ -918,6 +1066,7 @@ textarea:focus-visible {
     justify-content: center;
     align-items: center;
     padding-top: 20px;
+    background-color: white;
   }
 
   .news {
@@ -960,5 +1109,25 @@ textarea:focus-visible {
   }
   .achievement {
     flex-direction: column;
+  }
+  .animal-page-wrapper .main {
+    flex-direction: column;
+  }
+  .animal-page-wrapper .main .images {
+    width: 100%;
+  }
+
+  .animal-page-wrapper .main .description {
+    width: 100%;
+  }
+
+  .animal-page-wrapper .main ul li {
+    width: 100%;
+  }
+}
+@media (max-width: 700px) {
+  .animal-page-wrapper .main .images .image {
+    width: 90%;
+    height: 300px;
   }
 }

@@ -31,55 +31,30 @@
   <section class="gallery-wrapper">
     <div class="gallery">
       <div class="cards">
-        <div class="card">
-          <a href="#">
-            <div class="description">
-              <h3>Ime</h3>
+        <?php
+        define('_DEFVAR', 1);
+        include('db/connection.php');
+        if (!$conn) {
+          echo "<script language='javascript'>";
+          echo "console.log(\"" . mysqli_connect_error() . "\");";
+          echo "</script>";
+        } else {
+          $result = mysqli_query($conn, "SELECT * FROM animals ORDER BY inputTimestamp DESC");
+          for ($i = 0; $i < mysqli_num_rows($result); $i++) {
+            $row = mysqli_fetch_assoc($result);
+            echo "
+            <div class='card' style='background-image: url(" . $row["mainImage"] . ")'>
+              <a href='animalpage.php?id=" . $row["id"] . "'>
+                <div class='description'>
+                  <h3>" . $row["name"] . "</h3>
+                </div>
+              </a>
             </div>
-          </a>
-        </div>
-        <div class="card" style="background-image: url(img/Cat.png)">
-          <a href="#">
-            <div class="description">
-              <h3>Ime</h3>
-            </div>
-          </a>
-        </div>
-        <div class="card" style="background-image: url(img/Cat.png)">
-          <a href="#">
-            <div class="description">
-              <h3>Ime</h3>
-            </div>
-          </a>
-        </div>
-        <div class="card" style="background-image: url(img/Cat.png)">
-          <a href="#">
-            <div class="description">
-              <h3>Ime</h3>
-            </div>
-          </a>
-        </div>
-        <div class="card" style="background-image: url(img/Cat.png)">
-          <a href="#">
-            <div class="description">
-              <h3>Ime</h3>
-            </div>
-          </a>
-        </div>
-        <div class="card" style="background-image: url(img/Cat.png)">
-          <a href="#">
-            <div class="description">
-              <h3>Ime</h3>
-            </div>
-          </a>
-        </div>
-        <div class="card" style="background-image: url(img/Cat.png)">
-          <a href="#">
-            <div class="description">
-              <h3>Ime</h3>
-            </div>
-          </a>
-        </div>
+            ";
+          }
+          mysqli_close($conn);
+        }
+        ?>
       </div>
     </div>
   </section>

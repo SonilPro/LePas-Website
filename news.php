@@ -30,51 +30,37 @@
   </div>
   <section class="news-wrapper">
     <div class="news">
-      <a class="news-block" href="#">
-        <div class="block-wrapper">
-          <img src="img/newsImg.jpg" alt="newsImg1">
-          <div class="text">
-            <div class="date-wrapper">
-              <p class="date">25.12.2021</p>
+      <?php
+      define('_DEFVAR', 1);
+      include('db/connection.php');
+      if (!$conn) {
+        echo "<script language='javascript'>";
+        echo "console.log(\"" . mysqli_connect_error() . "\");";
+        echo "</script>";
+      } else {
+        $result = mysqli_query($conn, "SELECT * FROM articles ORDER BY inputTimestamp DESC LIMIT 3");
+        for ($i = 0; $i < mysqli_num_rows($result); $i++) {
+          $row = mysqli_fetch_assoc($result);
+          echo "
+          <a class='news-block' href='newspage.php?id=" . $row["id"] . "'>
+            <div class='block-wrapper'>
+              <div class='image' style='background-image: url(" . $row["image"] . ");'></div>
+              <div class='text'>
+                <div class='date-wrapper'>
+                  <p class='date'>" . date("j.n.Y.", strtotime($row["inputTimestamp"]))  . "</p>
+              </div>
+                <h3 class='title'>" . $row["title"] . "</h3>
+                <p class='summary'>
+                  " . $row["description"] . "
+                </p>
+              </div>
             </div>
-            <h3 class="title">Lorem ipsum</h3>
-            <p class="summary">
-              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Obcaecati in id architecto placeat voluptas quia
-              et, autem magni beatae necessitatibus adipisci quas, possimus eos non eligendi animi, quo illo reiciendis?
-            </p>
-          </div>
-        </div>
-      </a>
-      <a class="news-block" href="#">
-        <div class="block-wrapper">
-          <img src="img/newsImg.jpg" alt="newsImg1">
-          <div class="text">
-            <div class="date-wrapper">
-              <p class="date">25.12.2021</p>
-            </div>
-            <h3 class="title">Lorem ipsum</h3>
-            <p class="summary">
-              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Obcaecati in id architecto placeat voluptas quia
-              et, autem magni beatae necessitatibus adipisci quas, possimus eos non eligendi animi, quo illo reiciendis?
-            </p>
-          </div>
-        </div>
-      </a>
-      <a class="news-block" href="#">
-        <div class="block-wrapper">
-          <img src="img/newsImg.jpg" alt="newsImg1">
-          <div class="text">
-            <div class="date-wrapper">
-              <p class="date">25.12.2021</p>
-            </div>
-            <h3 class="title">Lorem ipsum</h3>
-            <p class="summary">
-              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Obcaecati in id architecto placeat voluptas quia
-              et, autem magni beatae necessitatibus adipisci quas, possimus eos non eligendi animi, quo illo reiciendis?
-            </p>
-          </div>
-        </div>
-      </a>
+          </a>
+            ";
+        }
+        mysqli_close($conn);
+      }
+      ?>
     </div>
   </section>
   <?php include('include/footer.php') ?>

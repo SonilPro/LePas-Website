@@ -31,7 +31,7 @@ define('_DEFVAR', 1);
     <div class="login-wrapper">
         <form action="" method="post">
             <div class="login-box">
-                <h1>Login</h1>
+                <h2>Login</h2>
 
                 <div class="textbox">
                     <i class="fa fa-user" aria-hidden="true"></i>
