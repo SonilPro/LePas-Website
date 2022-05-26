@@ -9,24 +9,28 @@
   <script src="https://kit.fontawesome.com/4705ced167.js" crossorigin="anonymous"></script>
   <link rel="stylesheet" href="style/style.css" />
   <link rel="shortcut icon" href="img/lepas_logo.ico" type="image/x-icon">
+  <script src="js/reveal.js"></script>
 </head>
 
 <body>
   <?php include('include/header.php'); ?>
   <aside>
     <div class="socials">
-      <a href="https://www.facebook.com/lepas.udruga/" target="_blank" style="background-color: #4267B2;">
+      <a href="https://www.facebook.com/lepas.udruga/" target="_blank" class="button" style="background-color: #4267B2;">
         <p>Posjetite nas na<br>Facebooku</p>
         <i class="fa fa-facebook" aria-hidden="true"></i>
       </a>
-      <a href="https://www.instagram.com/lepas_udruga/" target="_blank" style="background-color: #E4405F;">
+      <a href="https://www.instagram.com/lepas_udruga/" target="_blank" class="button" style="background-color: #E4405F;">
         <p>Posjetite nas na <br>Instagramu</p>
         <i class="fa fa-instagram" aria-hidden="true"></i>
       </a>
     </div>
   </aside>
-  <div class="header-title">
-    <h1>Galerija</h1>
+  <div class="header-title white">
+    <div class="line reveal"></div>
+    <div class="section-title">
+      <h2>Galerija</h2>
+    </div>
   </div>
   <section class="gallery-wrapper">
     <div class="gallery">

@@ -6,44 +6,29 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>O nama | LePas</title>
-    <script src="https://kit.fontawesome.com/4705ced167.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="style/style.css" />
     <link rel="shortcut icon" href="img/lepas_logo.ico" type="image/x-icon">
-    <script type="text/javascript">
-        window.addEventListener("scroll", reveal);
-
-        function reveal() {
-            var reveals = document.querySelectorAll('.reveal');
-
-            for (var i = 0; i < reveals.length; i++) {
-                var windowheight = window.innerHeight;
-                var revealtop = reveals[i].getBoundingClientRect().top;
-                var revealpoint = 150;
-
-                if (revealtop < windowheight - revealpoint) {
-                    reveals[i].classList.add('active');
-                }
-            }
-        }
-    </script>
 </head>
 
 <body>
     <?php include('include/header.php'); ?>
     <aside>
         <div class="socials">
-            <a href="https://www.facebook.com/lepas.udruga/" target="_blank" style="background-color: #4267B2;">
+            <a href="https://www.facebook.com/lepas.udruga/" target="_blank" class="button" style="background-color: #4267B2;">
                 <p>Posjetite nas na<br>Facebooku</p>
                 <i class="fa fa-facebook" aria-hidden="true"></i>
             </a>
-            <a href="https://www.instagram.com/lepas_udruga/" target="_blank" style="background-color: #E4405F;">
+            <a href="https://www.instagram.com/lepas_udruga/" target="_blank" class="button" style="background-color: #E4405F;">
                 <p>Posjetite nas na <br>Instagramu</p>
                 <i class="fa fa-instagram" aria-hidden="true"></i>
             </a>
         </div>
     </aside>
-    <div class="header-title">
-        <h1>O nama</h1>
+    <div class="header-title white">
+        <div class="line reveal"></div>
+        <div class="section-title">
+            <h2>O nama</h2>
+        </div>
     </div>
     <section class="about-wrapper ">
         <div class="about">
@@ -98,6 +83,8 @@
         </div>
     </section>
     <?php include('include/footer.php') ?>
+    <script src="https://kit.fontawesome.com/4705ced167.js" crossorigin="anonymous"></script>
+    <script src="js/reveal.js"></script>
 </body>
 
 </html>

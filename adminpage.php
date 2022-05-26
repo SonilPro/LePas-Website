@@ -28,17 +28,14 @@ if (isset($_SESSION['userType'])) {
     <title>Admin | LePas</title>
     <link rel="stylesheet" href="style/style.css" />
     <link rel="shortcut icon" href="img/lepas_logo.ico" type="image/x-icon">
+</head>
+
+<body>
+    <?php include('include/header.php'); ?>
+    <h2>Hello Admin</h2>
+    <button class="button"> Click </button>
+    <div class="result"> </div>
     <script type="text/javascript" src="js/jquery.js"></script>
-    <script>
-        function test() {
-            $.ajax({
-                url: "ajax.php",
-                success: function(result) {
-                    $(".result").text(result);
-                }
-            })
-        }
-    </script>
     <script>
         $(document).ready(function() {
             $('.button').click(function() {
@@ -55,13 +52,6 @@ if (isset($_SESSION['userType'])) {
             });
         });
     </script>
-</head>
-
-<body>
-    <?php include('include/header.php'); ?>
-    <h2>Hello Admin</h2>
-    <button class="button"> Click </button>
-    <div class="result"> </div>
 </body>
 
 </html>

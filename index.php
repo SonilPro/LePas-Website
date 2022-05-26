@@ -6,38 +6,20 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>LePas - udruga za dobrobit i zaštitu životinja</title>
-  <script src="https://kit.fontawesome.com/4705ced167.js" crossorigin="anonymous"></script>
   <link rel="stylesheet" href="style/style.css" />
   <link rel="shortcut icon" href="img/lepas_logo.ico" type="image/x-icon">
-  <script src="js/counterup.js"></script>
-  <script type="text/javascript">
-    window.addEventListener("scroll", reveal);
 
-    function reveal() {
-      var reveals = document.querySelectorAll('.reveal');
-
-      for (var i = 0; i < reveals.length; i++) {
-        var windowheight = window.innerHeight;
-        var revealtop = reveals[i].getBoundingClientRect().top;
-        var revealpoint = 150;
-
-        if (revealtop < windowheight - revealpoint) {
-          reveals[i].classList.add('active');
-        }
-      }
-    }
-  </script>
 </head>
 
 <body>
   <?php include('include/header.php'); ?>
   <aside>
     <div class="socials">
-      <a href="https://www.facebook.com/lepas.udruga/" target="_blank" style="background-color: #4267B2;">
+      <a href="https://www.facebook.com/lepas.udruga/" target="_blank" class="button" style="background-color: #4267B2;">
         <p>Posjetite nas na<br>Facebooku</p>
         <i class="fa fa-facebook" aria-hidden="true"></i>
       </a>
-      <a href="https://www.instagram.com/lepas_udruga/" target="_blank" style="background-color: #E4405F;">
+      <a href="https://www.instagram.com/lepas_udruga/" target="_blank" class="button" style="background-color: #E4405F;">
         <p>Posjetite nas na <br>Instagramu</p>
         <i class="fa fa-instagram" aria-hidden="true"></i>
       </a>
@@ -75,14 +57,14 @@
         <a class="button" href="donation.php">DONIRAJ</a>
       </div>
       <div class="option" style="
-            background-image: url(img/option_volounter.jpg);
+            background-image: url(img/option_volounteer.jpg);
           ">
         <span class="icon">
           <i class="fas  fa-hand-paper fa-3x fa-inverse" aria-hidden="true" style="position: relative; right:2px"></i>
         </span>
         <h3>VOLONTIRAJ</h3>
         <p>Pomozi našim njuškicama</p>
-        <a class="button" href="donation.php">VOLONTIRAJ</a>
+        <a class="button" href="volounteer.php">VOLONTIRAJ</a>
       </div>
     </div>
   </div>
@@ -180,6 +162,9 @@
     <p></p>
   </section>
   <?php include('include/footer.php') ?>
+  <script src="https://kit.fontawesome.com/4705ced167.js" crossorigin="anonymous"></script>
+  <script src="js/counterup.js"></script>
+  <script src="js/reveal.js"></script>
 </body>
 
 </html>
