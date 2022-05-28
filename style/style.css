@@ -3,6 +3,9 @@
   padding: 0;
   box-sizing: border-box;
 }
+:root {
+  font-size: 95%;
+}
 body,
 html {
   overflow-x: hidden;
@@ -686,6 +689,9 @@ form table {
 form td {
   vertical-align: top;
 }
+form td:first-child {
+  width: 30%;
+}
 
 form table input:not(.button) {
   width: 100%;
@@ -693,6 +699,18 @@ form table input:not(.button) {
   border-radius: 5px;
   border: 1px solid rgb(170, 170, 170);
   color: #5f5f5f;
+}
+form table td input[type="button"] {
+  width: 50%;
+}
+.file-upload {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  overflow-wrap: anywhere;
+}
+#form-anchor {
+  white-space: pre-wrap;
 }
 form textarea {
   width: 100%;
@@ -807,7 +825,7 @@ textarea:focus-visible {
   overflow: hidden;
 }
 .about {
-  max-width: 1500px;
+  max-width: 1300px;
   display: flex;
   flex-direction: column;
   text-align: left;
@@ -871,7 +889,7 @@ textarea:focus-visible {
   background-position: center center;
 }
 .achievement {
-  max-width: 1500px;
+  max-width: 1300px;
   display: flex;
   text-align: center;
   gap: 60px;
@@ -907,7 +925,7 @@ textarea:focus-visible {
   justify-content: center;
 }
 .animal-page-wrapper .main {
-  max-width: 1500px;
+  max-width: 1300px;
   display: flex;
   gap: 60px;
   padding: 0px 20px;
@@ -1028,7 +1046,7 @@ textarea:focus-visible {
   margin-top: 50px;
 }
 .news-page-wrapper .main {
-  max-width: 1500px;
+  max-width: 1300px;
   display: flex;
   gap: 20px;
   padding: 0px 20px;
@@ -1056,7 +1074,7 @@ textarea:focus-visible {
   margin-top: 50px;
 }
 .volounteer-wrapper .volounteer {
-  max-width: 1500px;
+  max-width: 1400px;
   display: flex;
   gap: 100px;
   flex-wrap: wrap;
@@ -1065,7 +1083,7 @@ textarea:focus-visible {
   justify-content: center;
 }
 .volounteer-wrapper .volounteer .block {
-  max-width: 1500px;
+  max-width: 1300px;
   display: flex;
   gap: 50px;
   padding: 0px 20px;
@@ -1147,6 +1165,10 @@ textarea:focus-visible {
 .volounteer-wrapper form {
   width: 60%;
   scroll-margin-top: 120px;
+}
+.volounteer #conf-msg {
+  display: none;
+  width: 100%;
 }
 @media (max-width: 1200px) {
   nav {

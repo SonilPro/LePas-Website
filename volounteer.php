@@ -46,11 +46,11 @@
                 <div class="text">
                     <h2>Šetnje</h2>
                     <p>Imamo 50-ak pasa koje je potrebno išetavati i to svaki dan nekoliko puta.</p>
-                    </br>
+                    <br />
                     <p>Ukoliko biste naš rad željeli podržati kroz šetnju naših šapica, rado ćemo vas ugostiti.</p>
-                    </br>
+                    <br />
                     <p>Također, ukoliko ste se možda odlučili za udomljenje jedne od naših njuškica, ovo je odličan način da se bolje upoznate. 🙂</p>
-                    </br>
+                    <br />
                     <p>Molimo vas da nas prije dolaska kontaktirate na mail udruge: <a href="mailto:udruga@lepas.hr">udruga@lepas.hr</a></p>
                 </div>
             </div>
@@ -58,13 +58,13 @@
                 <div class="text">
                     <h2>Privremeni smještaj</h2>
                     <p>Imate volju i vremena pomoći, ali niste sigurni kako biste to najbolje mogli?</p>
-                    </br>
-                    <p>Jedan od izuzetno vrijednih oblika pomoći jest privremeno čuvanje, odnosno - postati teta ili striček čuvalica! 🙂</p></br>
+                    <br />
+                    <p>Jedan od izuzetno vrijednih oblika pomoći jest privremeno čuvanje, odnosno - postati teta ili striček čuvalica! 🙂</p><br />
                     <h3>Što to znači?</h3>
                     <p>Biti čuvalica znači primiti psa u svoj dom na oporovaka ili smještaj do njegovog udomljenja.</p>
-                    </br>
+                    <br />
                     <p>Udruga za svo razdoblje čuvanja osigurava hranu i potrepštine za psa ili mačku te prijevoz do veterinara. Vi s druge strane osiguravate ljubav, pažnju i osnovni odgoj :)</a></p>
-                    </br>
+                    <br />
                     <a href="#form" id="form-anchor">Ispunite obrazac za privremeni smještaj</a>
                 </div>
                 <div class="image reveal">
@@ -87,44 +87,140 @@
                 </div>
             </div>
 
-            <form id="form">
-                <h3>Obrazac za privremeni smještaj</h2>
-                    <table cellspacing="30px">
-                        <tbody>
-                            <tr>
-                                <td><label>Ime:</label></td>
-                                <td><input type="text" name="firstname" /><br /></td>
-                            </tr>
-                            <tr>
-                                <td><label>Prezime:</label></td>
-                                <td><input type="text" name="lastname" /><br /></td>
-                            </tr>
-                            <tr>
-                                <td><label>E-mail:</label></td>
-                                <td><input type="email" name="mail" /><br /></td>
-                            </tr>
-                            <tr>
-                                <td><label>Telefon:</label></td>
-                                <td><input type="tel" name="phone" /><br /></td>
-                            </tr>
-                            <tr>
-                                <td><label>Poruka:</label></td>
-                                <td>
-                                    <textarea cols="30" rows="10"></textarea>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td></td>
-                                <td><input class="button" type="submit" name="submit" value="Pošalji" /></td>
-                            </tr>
-                        </tbody>
-                    </table>
+            <form id="form" action="#form" method="post">
+                <h3>Obrazac za privremeni smještaj</h3>
+                <table cellspacing="30px">
+                    <tbody>
+                        <tr>
+                            <td><label>Ime:</label></td>
+                            <td><input type="text" name="firstname" required maxlength="32" oninput="this.setCustomValidity('')" oninvalid="this.setCustomValidity('Molimo upišite vaše ime')" /><br /></td>
+                        </tr>
+                        <tr>
+                            <td><label>Prezime:</label></td>
+                            <td><input type="text" name="lastname" required maxlength="32" oninput="this.setCustomValidity('')" oninvalid="this.setCustomValidity('Molimo upišite vaše prezime')" /><br /></td>
+                        </tr>
+                        <tr>
+                            <td><label>E-mail:</label></td>
+                            <td><input type="email" name="mail" id="mail" oninput="this.setCustomValidity('')" oninvalid="this.setCustomValidity('Email je krivo upisan')" /><br /></td>
+                        </tr>
+                        <tr>
+                            <td><label>Telefon:</label></td>
+                            <td><input type="tel" name="phone" id="phone" required /><br /></td>
+                        </tr>
+                        <tr>
+                            <td><label>Slika/slike smještaja:</label></td>
+                            <td class="file-upload">
+                                <input type="button" id="click-input" value="Dodaj slike" onclick="document.getElementById('file').click();" />
+                                <label for="click-input" id="info" style="height: 10px;"></label>
+                                <input type="file" style="display:none;" id="file" name="images[]" accept="image/*" enctype="multipart/form-data" multiple required>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><label>Poruka:</label></td>
+                            <td>
+                                <textarea cols="30" rows="10"></textarea>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td><input class="button" type="submit" name="submit" id="submit" value="Pošalji" /></td>
+                        </tr>
+                    </tbody>
+                </table>
             </form>
+            <div id="conf-msg">
+                <h3>Forma je poslana!</h3>
+            </div>
         </div>
     </section>
     <?php include('include/footer.php') ?>
     <script src="https://kit.fontawesome.com/4705ced167.js" crossorigin="anonymous"></script>
     <script src="js/reveal.js"></script>
+    <script type="text/javascript" src="js/jquery.js"></script>
+    <script type="text/javascript">
+        var submit = false;
+        fileInputElement = document.getElementById('file');
+        fileLabelElement = document.getElementById('info');
+        var fileButtonElement = document.getElementById("click-input");
+        var errorMsg = "Molimo odaberite barem jednu sliku";
+        document.getElementById("file").onchange = function() {
+            var count = fileInputElement.files.length;
+            if (count > 1) {
+                for (var i = 0; i < count; i++) {
+                    var file = fileInputElement.files[i];
+                    var pattern = "image/*";
+                    if (!file.type.match(pattern)) {
+                        fileLabelElement.innerHTML = "Molimo odaberite samo slike";
+                        errorMsg = "Molimo odaberite samo slike";
+                        fileInputElement.value = null;
+                        fileButtonElement.style.border = "1px solid red";
+                        submit = false;
+                        return;
+                    } else if ((file.size / 1024 / 1024) > 5) {
+                        fileLabelElement.innerHTML = "Veličina slika je prevelika";
+                        errorMsg = "Veličina slika je prevelika";
+                        fileInputElement.value = null;
+                        fileButtonElement.style.border = "1px solid red";
+                        submit = false;
+                        return;
+                    }
+                    fileButtonElement.style.border = "1px solid black";
+                    fileLabelElement.innerHTML = "Broj unesenih slika: " + count;
+                    submit = true;
+                }
+            } else if (count == 1) {
+                var file = fileInputElement.files[0];
+                var pattern = "image/*";
+                if (!file.type.match(pattern)) {
+                    fileLabelElement.innerHTML = "Molimo odaberite samo slike";
+                    errorMsg = "Molimo odaberite samo slike";
+                    fileInputElement.value = null;
+                    fileButtonElement.style.border = "1px solid red";
+                    submit = false;
+                    return;
+                } else if ((file.size / 1024 / 1024) > 5) {
+                    fileLabelElement.innerHTML = "Veličina slika je prevelika";
+                    errorMsg = "Veličina slika je prevelika";
+                    fileInputElement.value = null;
+                    fileButtonElement.style.border = "1px solid red";
+                    submit = false;
+                    return;
+                }
+                fileButtonElement.style.border = "1px solid black";
+                var path = fileInputElement.value;
+                fileLabelElement.innerHTML = path.split(/(\\|\/)/g).pop()
+                submit = true;
+            }
+        }
+
+        document.getElementById("submit").onclick = function() {
+            if (!submit) {
+                fileLabelElement.innerHTML = errorMsg;
+                fileLabelElement.focus();
+            }
+        }
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $("form").on("submit", function(event) {
+                event.preventDefault();
+
+                var formdata = new FormData(this);
+                jQuery.ajax({
+                    url: "process_form.php",
+                    type: "POST",
+                    data: formdata,
+                    processData: false,
+                    contentType: false,
+                    success: function(res) {
+                        document.getElementsByTagName("form")[0].style.display = "none";
+                        document.getElementById("conf-msg").style.display = "unset";
+                        jQuery('#conf-msg').html(res);
+                    }
+                });
+            });
+        });
+    </script>
 </body>
 
 </html>
