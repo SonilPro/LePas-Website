@@ -65,7 +65,7 @@ if (isset($_FILES['images']['name'])) {
     $mail->SMTPDebug = 4;
 
     //Set the hostname of the mail server
-    $mail->Host = 'smtp.mailtrap.io';
+    $mail->Host = 'smtp.gmail.com';
     //Use `$mail->Host = gethostbyname('smtp.gmail.com');`
     //if your network does not support SMTP over IPv6,
     //though this may cause issues with TLS
@@ -73,7 +73,7 @@ if (isset($_FILES['images']['name'])) {
     //Set the SMTP port number:
     // - 465 for SMTP with implicit TLS, a.k.a. RFC8314 SMTPS or
     // - 587 for SMTP+STARTTLS
-    $mail->Port = 2525;
+    $mail->Port = 465;
 
     //Set the encryption mechanism to use:
     // - SMTPS (implicit TLS on port 465) or

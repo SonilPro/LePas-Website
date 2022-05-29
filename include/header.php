@@ -8,7 +8,7 @@ $page = substr($page, 0, strpos($page, "."));
                 <img src="img/lepas_logo.png" class="logo" />
             </a>
             <ul class="nav-links">
-                <input type="checkbox" id="checkbox_toggle" autocomplete="off" />
+                <input type="checkbox" class="checkbox_toggle" id="checkbox_toggle" autocomplete="off" />
                 <label for="checkbox_toggle" class="hamburger">
                     <span></span>
                 </label>
