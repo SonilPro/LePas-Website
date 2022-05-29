@@ -1,4 +1,15 @@
 <?php
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $json = json_decode(file_get_contents("php://input"));
+    if ($json->ajax) {
+        $result = "";
+        include_once("adminpagelayout.php");
+        $result = getLayout($json->id);
+        echo json_encode($result);
+        die();
+    }
+}
+
 session_start();
 if (isset($_SESSION['userType'])) {
     if ($_SESSION['userType'] != 'admin') {
@@ -33,21 +44,47 @@ if (isset($_SESSION['userType'])) {
 <body>
     <?php include('include/header.php'); ?>
     <h2>Hello Admin</h2>
-    <button class="button"> Click </button>
-    <div class="result"> </div>
+    <div class="adminpage-nav">
+        <div>
+            <ul>
+                <li><a href="#" class="button1" nmbr=1>Dodaj</a></li>
+                <li><a href="#" class="button1" nmbr=2>Dodaj</a></li>
+                <li><a href="#" class="button1" nmbr=3>Dodaj</a></li>
+                <li><a href="#" class="button1" nmbr=4>Dodaj</a></li>
+                <li><a href="#" class="button1" nmbr=5>Dodaj</a></li>
+            </ul>
+        </div>
+    </div>
+    <div id="content">
+        <?php
+        if (isset($_GET['id'])) {
+            include_once("adminpagelayout.php");
+            echo getLayout($_GET['id']);
+        }
+        ?>
+    </div>
     <script type="text/javascript" src="js/jquery.js"></script>
     <script>
         $(document).ready(function() {
-            $('.button').click(function() {
-                var clickBtnValue = $(this).val();
-                var ajaxurl = 'functions/logout.php',
+            $('.button1').click(function() {
+                var clickBtnValue = $(this).attr('nmbr');
+                var ajaxurl = 'adminpage.php',
                     data = {
-                        action: "logout"
+                        id: clickBtnValue,
+                        ajax: 1
                     };
-                console.log(data);
-                $.post(ajaxurl, data, function(response) {
-                    // Response div goes here.
-                    window.location.replace("login.php")
+                $.ajax({
+                    type: 'POST',
+                    url: ajaxurl,
+                    data: JSON.stringify(data),
+                    contentType: 'application/json',
+                    success: function(response) {
+                        window.history.pushState("object or string", "Title", window.location.href.substr(0, window.location.href.strlen - 1) + "?id=" + clickBtnValue);
+                        console.log(response["id"]);
+                        document.getElementById("content").innerHTML = response;
+                    },
+                    dataType: "json"
+                    //window.location.replace("login.php");
                 });
             });
         });
