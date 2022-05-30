@@ -6,7 +6,7 @@ if (!defined('_DEFVAR')) {
             </script>";
     die('Restricted Access');
 }
-function getLayout($id, $sort, $order)
+function getLayout($id, $sort, $order, $page_number)
 {
     $result = "";
     switch ($id) {
@@ -29,7 +29,13 @@ function getLayout($id, $sort, $order)
             if (!$conn) {
                 $result = "Cannot connect to database";
             } else {
-                $resultq = mysqli_query($conn, "SELECT * FROM animals ORDER BY $sort $order");
+                $limit = 10;
+                $getQuery = "SELECT * FROM animals";
+                $queryResult = mysqli_query($conn, $getQuery);
+                $total_rows = mysqli_num_rows($queryResult);
+                $total_pages = ceil($total_rows / $limit);
+                $initial_page = ($page_number - 1) * $limit;
+                $resultq = mysqli_query($conn, "SELECT * FROM ( SELECT * FROM animals LIMIT $initial_page, $limit)AS a ORDER BY $sort $order");
                 for ($i = 0; $i < mysqli_num_rows($resultq); $i++) {
                     $row = mysqli_fetch_assoc($resultq);
                     $result .= "
@@ -37,7 +43,7 @@ function getLayout($id, $sort, $order)
                         <td>" . ($i + 1) . ".</td>
                         <td>
                             <div>
-                                <a class='button2' href='#' nmbr=" . $row['id'] . "><img class='rounded-circle' src='" . $row['mainImage'] . "' alt=''></a>
+                                <a class='button2' href='#form' nmbr=" . $row['id'] . "><img class='rounded-circle' src='" . $row['mainImage'] . "' alt=''></a>
                             </div>
                         </td>
                         <td> " . $row['id'] . "</td>
@@ -53,7 +59,17 @@ function getLayout($id, $sort, $order)
                 $result .=
                     "</tbody>
                     </table>
-                    <a class='button2' nmbr='new' href='#' style='text-align: center;'>Dodaj novu životinju</a>
+                    <div style='text-align: center; display: block'>";
+                for ($pn = 1; $pn <= $total_pages; $pn++) {
+                    if ($pn == $page_number) {
+                        $result .= "<a class='button1' style='color: #e4405f' page='$pn' nmbr='$id' href='#' >$pn</a>";
+                    } else {
+                        $result .= "<a class='button1' page='$pn' nmbr='$id' href='#' >$pn</a>";
+                    }
+                }
+                $result .= "
+                    </div>
+                    <a class='button2' nmbr='new' href='#form' style='text-align: center;'>Dodaj novu životinju</a>
                 ";
                 mysqli_close($conn);
             }
@@ -80,7 +96,7 @@ function getObject($id, $layoutId)
                             <tbody>
                                 <tr>
                                     <td><label>Id:</label></td>
-                                    <td><input value='New' type='text' name='id' disabled='disabled'/><br /></td>
+                                    <td><input style='border: none' value='New' type='text' name='id' disabled='disabled'/><br /></td>
                                 </tr>
                                 <tr>
                                     <td><label>Ime:</label></td>
@@ -134,7 +150,7 @@ function getObject($id, $layoutId)
                         <tbody>
                             <tr>
                                 <td><label>Id:</label></td>
-                                <td><input  value=" . $animal['id'] . " type='text' name='id' disabled='disabled'/><br /></td>
+                                <td><input style='border: none'  value=" . $animal['id'] . " type='text' name='id' disabled='disabled'/><br /></td>
                             </tr>
                             <tr>
                                 <td><label>Ime:</label></td>
