@@ -1,10 +1,21 @@
 <?php
+define('_DEFVAR', 1);
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $json = json_decode(file_get_contents("php://input"));
-    if ($json->ajax) {
+    $result = "";
+    if ($json->layout) {
         $result = "";
         include_once("adminpagelayout.php");
-        $result = getLayout($json->id);
+        $result = getLayout(
+            $json->id,
+            (isset($json->sort)) ?  $json->sort : "inputTimestamp",
+            (isset($json->order)) ?  $json->order : "ASC"
+        );
+        echo json_encode($result);
+        die();
+    } else if ($json->edit) {
+        include_once("adminpagelayout.php");
+        $result = getObject($json->id, $json->edit);
         echo json_encode($result);
         die();
     }
@@ -41,7 +52,7 @@ if (isset($_SESSION['userType'])) {
     <link rel="shortcut icon" href="img/lepas_logo.ico" type="image/x-icon">
 </head>
 
-<body>
+<body style="background-color: #e7f1f5;">
     <?php include('include/header.php'); ?>
     <div class="adminpage-wrapper">
         <aside class="adminpage-nav" id="adminpage-nav">
@@ -58,84 +69,23 @@ if (isset($_SESSION['userType'])) {
             </ul>
         </aside>
         <div id="content">
-            <?php
-            if (isset($_GET['id'])) {
-                include_once("adminpagelayout.php");
-                echo getLayout($_GET['id']);
-            }
-            ?>
-            <div class="card list">
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th class="serial">#</th>
-                            <th class="avatar">Avatar</th>
-                            <th>ID</th>
-                            <th>Name</th>
-                            <th>Product</th>
-                            <th>Quantity</th>
-                            <th>Status</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>1.</td>
-                            <td>
-                                <div>
-                                    <a href="#"><img class="rounded-circle" src="img/newsImg.jpg" alt=""></a>
-                                </div>
-                            </td>
-                            <td> #5469 </td>
-                            <td> <span class="name">Louis Stanley</span> </td>
-                            <td> <span class="product">iMax</span> </td>
-                            <td><span class="count">231</span></td>
-                            <td>
-                                <span class="badge badge-complete">Complete</span>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+            <div class='card list'>
+                <?php
+                if (isset($_GET['id'])) {
+                    include_once("adminpagelayout.php");
+                    echo getLayout($_GET['id'], "name", "DESC");
+                } else {
+                    include_once("adminpagelayout.php");
+                    echo getLayout(1, "name", "DESC");
+                }
+                ?>
             </div>
-            <div class="card">
-                <form id="form" action="#form" method="post">
+            <div class="card form">
 
-                    <h3>Obrazac za dodavanje životinje</h3>
-                    <table cellspacing="30px">
-                        <tbody>
-                            <tr>
-                                <td><label>Ime:</label></td>
-                                <td><input type="text" name="firstname" required maxlength="32" oninput="this.setCustomValidity('')" oninvalid="this.setCustomValidity('Molimo upišite vaše ime')" /><br /></td>
-                            </tr>
-                            <tr>
-                                <td><label>Prezime:</label></td>
-                                <td><input type="text" name="lastname" required maxlength="32" oninput="this.setCustomValidity('')" oninvalid="this.setCustomValidity('Molimo upišite vaše prezime')" /><br /></td>
-                            </tr>
-                            <tr>
-                                <td><label>E-mail:</label></td>
-                                <td><input type="email" name="mail" id="mail" oninput="this.setCustomValidity('')" oninvalid="this.setCustomValidity('Email je krivo upisan')" /><br /></td>
-                            </tr>
-                            <tr>
-                                <td><label>Telefon:</label></td>
-                                <td><input type="tel" name="phone" id="phone" required /><br /></td>
-                            </tr>
-                            <tr>
-                                <td><label>Poruka:</label></td>
-                                <td>
-                                    <textarea cols="30" rows="10"></textarea>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td></td>
-                                <td><input class="button" type="submit" name="submit" id="submit" value="Pošalji" /></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </form>
             </div>
-
         </div>
     </div>
-    <script type="text/javascript" src="js/jquery.js"></script>
+    <script type=" text/javascript" src="js/jquery.js"></script>
     <script>
         $('#checkbox_toggle1').change(function() {
             if ($('#checkbox_toggle1').is(":checked")) {
@@ -145,12 +95,14 @@ if (isset($_SESSION['userType'])) {
             }
         });
         $(document).ready(function() {
+            //NAVIGATION
             $('.button1').click(function() {
                 var clickBtnValue = $(this).attr('nmbr');
                 var ajaxurl = 'adminpage.php',
                     data = {
                         id: clickBtnValue,
-                        ajax: 1
+                        layout: 1,
+                        edit: 0
                     };
                 $.ajax({
                     type: 'POST',
@@ -159,15 +111,90 @@ if (isset($_SESSION['userType'])) {
                     contentType: 'application/json',
                     success: function(response) {
                         window.history.pushState("object or string", "Title", window.location.href.substr(0, window.location.href.strlen - 1) + "?id=" + clickBtnValue);
-                        console.log(response["id"]);
-                        document.getElementById("content").innerHTML = response;
+                        $('.list').html(response);
                     },
-                    dataType: "json"
-                    //window.location.replace("login.php");
+                    dataType: "json",
+                    error: function(result) {
+                        console.log(result);
+                    }
+                });
+            });
+            //GET FORM
+            $('#content').on('click', 'a.button2', function() {
+                var clickBtnValue = $(this).attr('nmbr');
+                var ajaxurl = 'adminpage.php',
+                    data = {
+                        id: clickBtnValue,
+                        layout: 0,
+                        edit: 1
+                    };
+                $.ajax({
+                    type: 'POST',
+                    url: ajaxurl,
+                    data: JSON.stringify(data),
+                    contentType: 'application/json',
+                    success: function(response) {
+                        $('.form').html(response);
+                        window.history.pushState("object or string", "Title", window.location.href.substr(0, window.location.href.strlen - 1) + "?objectId=" + clickBtnValue);
+                    },
+                    dataType: "json",
+                    error: function(result) {
+                        console.log(result);
+                    }
+                });
+            });
+            //SORTING
+            $('#content').on('click', 'a.sort', function() {
+                var clickBtnValue = $(this).attr('column');
+                var order = $(this).attr('order');
+                var ajaxurl = 'adminpage.php',
+                    data = {
+                        id: 1,
+                        layout: 1,
+                        edit: 0,
+                        sort: clickBtnValue,
+                        order: order
+                    };
+                $.ajax({
+                    type: 'POST',
+                    url: ajaxurl,
+                    data: JSON.stringify(data),
+                    contentType: 'application/json',
+                    success: function(response) {
+                        $('.list').html(response);
+                        $("a[column='" + clickBtnValue + "']").attr('order', (order == 'DESC') ? 'ASC' : 'DESC');
+                        var others = $(".sort i").each(function() {
+                            $(this).addClass("fas fa-sort");
+                        });
+                        var sort_icon = (order == 'DESC') ? '-up' : '-down';
+                        $("a[column='" + clickBtnValue + "'] i").addClass("fas fa-sort" + sort_icon);
+                    },
+                    dataType: "json",
+                    error: function(result) {
+                        console.log(result);
+                    }
+                });
+            });
+            //FORM SUBMIT
+            $("#content").on("submit", 'form', function(event) {
+                event.preventDefault();
+                var formdata = new FormData(this);
+                jQuery.ajax({
+                    url: "forms/add_animal_form.php",
+                    type: "POST",
+                    data: formdata,
+                    processData: false,
+                    contentType: false,
+                    success: function(res) {
+                        document.getElementsByTagName("form")[0].style.display = "none";
+                        document.getElementById("conf-msg").style.display = "unset";
+                        jQuery('#conf-msg').html(res);
+                    }
                 });
             });
         });
     </script>
+    <script src="https://kit.fontawesome.com/4705ced167.js" crossorigin="anonymous"></script>
 </body>
 
 </html>
