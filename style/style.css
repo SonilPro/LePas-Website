@@ -693,7 +693,8 @@ form td:first-child {
   width: 30%;
 }
 
-form table input:not(.button) {
+form table input:not(.button),
+form table select {
   width: 100%;
   height: 30px;
   border-radius: 5px;
@@ -1210,6 +1211,7 @@ textarea:focus-visible {
   width: 90%;
   padding-top: 50px;
   flex: 1;
+  margin-left: 180px;
 }
 .adminpage-wrapper #content .card {
   min-width: 0;
@@ -1238,6 +1240,16 @@ textarea:focus-visible {
   padding: 0.75em 1.25em;
   text-transform: uppercase;
 }
+.list .table a span {
+  color: #868e96;
+  font-size: 12px;
+  font-weight: 400;
+  padding: 0.75em 1.25em;
+  text-transform: uppercase;
+}
+.list .table a span:hover {
+  color: #f77597;
+}
 .list .table th a {
   color: #868e96;
   font-size: 12px;
@@ -1255,6 +1267,7 @@ textarea:focus-visible {
 .adminpage-wrapper .card form {
   background-color: transparent;
   padding: 20px;
+  scroll-margin-top: 90px;
 }
 @media (max-width: 1200px) {
   .adminpage-wrapper .adminpage-nav {
@@ -1475,6 +1488,9 @@ textarea:focus-visible {
   }
   .volounteer-wrapper form {
     width: 90%;
+  }
+  .adminpage-wrapper #content {
+    margin: unset;
   }
 }
 @media (max-width: 700px) {
