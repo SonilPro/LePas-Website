@@ -39,7 +39,7 @@ function getLayout($id, $sort, $order, $page_number)
 
                 for ($i = 0; $i <  mysqli_num_rows($resultq); $i++) {
                     $row = mysqli_fetch_assoc($resultq);
-                    $files = array_diff(scandir($row['images']), array('.', '..'));
+                    $files = array_diff(scandir($row['mainImage']), array('.', '..'));
                     $mainImage = "";
                     foreach ($files as $file) {
                         if (pathinfo($file, PATHINFO_FILENAME) == 'main') {
@@ -190,7 +190,16 @@ function getObject($id, $layoutId)
                 mysqli_stmt_bind_param($stmt, "i", $id);
                 mysqli_stmt_execute($stmt);
                 $sqlResult = mysqli_stmt_get_result($stmt);
+
                 while ($animal = mysqli_fetch_assoc($sqlResult)) {
+                    $files = array_diff(scandir($animal['mainImage']), array('.', '..'));
+                    $mainImage = "";
+                    foreach ($files as $file) {
+                        if (pathinfo($file, PATHINFO_FILENAME) == 'main') {
+                            $mainImage .=  $animal['mainImage'] . $file;
+                        }
+                    }
+                    $files = array_diff(scandir($animal['images']), array('.', '..'));
                     $result = "
                     <form id='form' action='#' method='post'>
 
@@ -260,6 +269,33 @@ function getObject($id, $layoutId)
                                     <textarea cols='150' rows='20'>" . $animal['description'] . "</textarea>
                                 </td>
                             </tr>
+                            <tr>
+                                <td>
+                                    <label>Glavna slika:</label></td>
+                                <td>
+                                    <div class='img'>
+                                        <img src='$mainImage' alt='mainImage'>
+                                        <input type='file' id='file' name='image' accept='image/*' enctype='multipart/form-data'>
+                                    </div>
+                                </td>
+                                </tr>
+                            <tr>
+                            <tr>
+                                <td>
+                                    <label>Slike:</label></td>
+                                <td>
+                                    <div class='img'>";
+                    foreach ($files as $file) {
+                        if (pathinfo($file, PATHINFO_EXTENSION)) {
+                            $result .= "<img src='" . $animal['images'] . $file . "' alt='mainImage'>";
+                        }
+                    }
+                    // <img src='$mainImage' alt='mainImage'>
+                    $result .= "
+                                        <input type='file' id='file' name='image' accept='image/*' enctype='multipart/form-data' multiple>
+                                    </div>
+                                </td>
+                                </tr>
                             <tr>
                                 <td></td>
                                 <td><input class='button' type='submit' name='submit' id='submit' value='Pošalji' /></td>

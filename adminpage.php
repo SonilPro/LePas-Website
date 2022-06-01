@@ -147,7 +147,9 @@ if (isset($_SESSION['userType'])) {
                         params.set("pageNmbr", pageValue);
                         params.delete("objectId");
                         params.delete("editId");
-                        window.history.replaceState({}, "", decodeURIComponent(`${window.location.pathname}?${params}`));
+
+                        history.replaceState(null, document.title, location.pathname + "#!/tempURL");
+                        window.history.pushState({}, "", decodeURIComponent(`${window.location.pathname}?${params}`));
                         $('.list').html(response);
                     },
                     dataType: "json",
@@ -180,7 +182,8 @@ if (isset($_SESSION['userType'])) {
                         const params = new URLSearchParams(window.location.search);
                         params.set("editId", 1);
                         params.set("objectId", clickBtnValue);
-                        window.history.replaceState({}, "", decodeURIComponent(`${window.location.pathname}?${params}`));
+                        history.replaceState(null, document.title, location.pathname + "#!/tempURL");
+                        window.history.pushState({}, "", decodeURIComponent(`${window.location.pathname}?${params}`));
                     },
                     dataType: "json",
                     error: function(result) {
@@ -264,7 +267,7 @@ if (isset($_SESSION['userType'])) {
                     }
                 });
             });
-            $('#form table').change(function() {
+            $('#content').on('change', '#form table', function() {
                 formChange = true;
             });
             window.addEventListener("beforeunload", function(e) {
@@ -277,6 +280,15 @@ if (isset($_SESSION['userType'])) {
 
                 (e || window.event).returnValue = confirmationMessage; //Gecko + IE
                 return confirmationMessage; //Gecko + Webkit, Safari, Chrome etc.
+            });
+            $(window).bind("popstate", function() {
+                if (location.hash === "#!/tempURL") {
+                    history.replaceState(null, document.title, location.pathname);
+                    //replaces first element of last element of stack with google.com/gmail so can be used further
+                    setTimeout(function() {
+                        location.replace("http://www.yahoo.com/");
+                    }, 0);
+                }
             });
         });
     </script>

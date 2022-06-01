@@ -46,8 +46,15 @@
           $result = mysqli_query($conn, "SELECT * FROM animals ORDER BY inputTimestamp DESC");
           for ($i = 0; $i < mysqli_num_rows($result); $i++) {
             $row = mysqli_fetch_assoc($result);
+            $files = array_diff(scandir($row['mainImage']), array('.', '..'));
+            $mainImage = "";
+            foreach ($files as $file) {
+              if (pathinfo($file, PATHINFO_FILENAME) == 'main') {
+                $mainImage .=  $row['mainImage'] . $file;
+              }
+            }
             echo "
-            <div class='card' style='background-image: url(" . $row["mainImage"] . ")'>
+            <div class='card' style='background-image: url(" .  $mainImage . ")'>
               <a href='animalpage.php?id=" . $row["id"] . "'>
                 <div class='description'>
                   <h3>" . $row["name"] . "</h3>

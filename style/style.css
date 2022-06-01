@@ -1269,6 +1269,13 @@ textarea:focus-visible {
   padding: 20px;
   scroll-margin-top: 90px;
 }
+.adminpage-wrapper .card form .img {
+  max-width: 500px;
+}
+.adminpage-wrapper .card form img {
+  width: 40%;
+  padding: 4px;
+}
 @media (max-width: 1200px) {
   .adminpage-wrapper .adminpage-nav {
     transform: translateX(-75%);
