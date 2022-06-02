@@ -1193,6 +1193,13 @@ textarea:focus-visible {
   top: 85px;
   z-index: 1;
 }
+.adminpage-wrapper .adminpage-nav ul {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding-top: 20px;
+}
 .adminpage-wrapper .adminpage-nav .hamburger {
   position: absolute;
   top: 10px;

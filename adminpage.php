@@ -144,15 +144,20 @@ if (isset($_SESSION['userType'])) {
                         params.delete("objectId");
                         params.delete("editId");
 
+
+                        $('.list').html(response);
+                        $('.list').html(response);
+                        document.querySelector('#form').scrollIntoView({
+                            behavior: 'smooth'
+                        });
                         history.go(-backLen);
                         setTimeout(function() {
                             if (backLen < 2) {
                                 backLen++;
                             }
                             window.history.pushState({}, "", decodeURIComponent(`${window.location.pathname}?${params}`));
-                        }, 100);
+                        }, 500);
 
-                        $('.list').html(response);
                     },
                     dataType: "json",
                     error: function(result) {
@@ -228,6 +233,7 @@ if (isset($_SESSION['userType'])) {
             //FORM SUBMIT
             $("#content").on("submit", 'form', function(event) {
                 $(":disabled").prop("disabled", false);
+                $("#submit").prop('disabled', true);
                 event.preventDefault();
                 var formdata = new FormData(this);
                 jQuery.ajax({
@@ -237,6 +243,7 @@ if (isset($_SESSION['userType'])) {
                     processData: false,
                     contentType: false,
                     success: function(res) {
+                        formChange = false;
                         document.getElementsByTagName("form")[0].style.display = "none";
                         document.getElementById("conf-msg").style.display = "unset";
                         jQuery('#conf-msg').html(res);
@@ -264,7 +271,7 @@ if (isset($_SESSION['userType'])) {
                     data: JSON.stringify(data),
                     contentType: 'application/json',
                     success: function(response) {
-                        $('.button1')[0].click();
+                        document.location.reload();
                         console.log(response);
                     },
                     dataType: "json",

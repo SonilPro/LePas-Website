@@ -84,10 +84,20 @@ if (isset($_POST['id'])) {
                     } else {
                         $result = $mainImgTargetDir . basename($mainImage);
                     }
+
+                    $countfiles = count($_FILES['images']['name']);
+                    for ($i = 0; $i < $countfiles; $i++) {
+                        $fileExt = pathinfo($_FILES['images']['name'][$i], PATHINFO_EXTENSION);
+                        if (!move_uploaded_file($_FILES['images']['tmp_name'][$i], $imagesTargetDir . '/' . $i . '.' . $fileExt)) {
+                            $result = $fileExt . $countfiles;
+                        }
+                    }
+
+
                     $getQuery = "UPDATE animals SET images = 'img/animals/$createdAnimalId/', mainImage = 'img/animals/$createdAnimalId/mainImg/'
                                     WHERE id = '$createdAnimalId'";
                     if (mysqli_query($conn, $getQuery)) {
-                        $result = "Animal added successfully";
+                        //$result = "Animal added successfully";
                     } else {
                         $result = "Problem with updating images";
                     }

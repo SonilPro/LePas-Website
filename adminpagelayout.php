@@ -180,7 +180,7 @@ function getObject($id, $layoutId)
                                         <label>Slike:</label></td>
                                     <td>
                                         <div class='img'>
-                                            <input type='file' id='file' name='images' accept='image/*' enctype='multipart/form-data' multiple required>
+                                            <input type='file' id='file' name='images[]' accept='image/*' enctype='multipart/form-data' multiple required>
                                         </div>
                                     </td>
                                     </tr>
@@ -266,7 +266,7 @@ function getObject($id, $layoutId)
                             </tr>
                             <tr>
                                 <td><label>Vrsta:</label></td>
-                                <td><input type='text' name='breed' id='breed' required /><br /></td>
+                                <td><input value='" . $animal['breed'] . "' type='text' name='breed' id='breed' required /><br /></td>
                             </tr>
                             <tr>
                                     <td><label>Veličina:</label></td>
