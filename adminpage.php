@@ -82,19 +82,14 @@ if (isset($_SESSION['userType'])) {
                     echo getLayout($_GET['id'], "inputTimestamp", "ASC", (isset($_GET['page']) != true) ? 1 : $_GET['page']);
                 } else {
                     include_once("adminpagelayout.php");
-                    echo getLayout(1, "name", "DESC", 1);
+                    echo getLayout(1, "inputTimestamp", "ASC", 1);
                 }
                 ?>
             </div>
             <div class="card form">
                 <?php
-                if (isset($_GET['objectId'])) {
-                    include_once("adminpagelayout.php");
-                    echo getObject($_GET['objectId'], $_GET['editId']);
-                } else {
-                    include_once("adminpagelayout.php");
-                    echo getObject('new', 1);
-                }
+                include_once("adminpagelayout.php");
+                echo getObject('new', 1);
                 ?>
             </div>
         </div>
@@ -102,6 +97,7 @@ if (isset($_SESSION['userType'])) {
     <script type="text/javascript" src="js/jquery.js"></script>
     <script type="text/javascript" src="js/functions.js"></script>
     <script>
+        var backLen = 1;
         var get = location.search.substr(1).split("&").reduce((o, i) => (u = decodeURIComponent, [k, v] = i.split("="), o[u(k)] = v && u(v), o), {});
         var layout = (get.id != undefined) ? get.id : 1;
         var formChange = false;
@@ -148,8 +144,14 @@ if (isset($_SESSION['userType'])) {
                         params.delete("objectId");
                         params.delete("editId");
 
-                        history.replaceState(null, document.title, location.pathname + "#!/tempURL");
-                        window.history.pushState({}, "", decodeURIComponent(`${window.location.pathname}?${params}`));
+                        history.go(-backLen);
+                        setTimeout(function() {
+                            if (backLen < 2) {
+                                backLen++;
+                            }
+                            window.history.pushState({}, "", decodeURIComponent(`${window.location.pathname}?${params}`));
+                        }, 100);
+
                         $('.list').html(response);
                     },
                     dataType: "json",
@@ -179,11 +181,9 @@ if (isset($_SESSION['userType'])) {
                     contentType: 'application/json',
                     success: function(response) {
                         $('.form').html(response);
-                        const params = new URLSearchParams(window.location.search);
-                        params.set("editId", 1);
-                        params.set("objectId", clickBtnValue);
-                        history.replaceState(null, document.title, location.pathname + "#!/tempURL");
-                        window.history.pushState({}, "", decodeURIComponent(`${window.location.pathname}?${params}`));
+                        document.querySelector('#form').scrollIntoView({
+                            behavior: 'smooth'
+                        });
                     },
                     dataType: "json",
                     error: function(result) {
@@ -227,6 +227,7 @@ if (isset($_SESSION['userType'])) {
             });
             //FORM SUBMIT
             $("#content").on("submit", 'form', function(event) {
+                $(":disabled").prop("disabled", false);
                 event.preventDefault();
                 var formdata = new FormData(this);
                 jQuery.ajax({
@@ -238,7 +239,11 @@ if (isset($_SESSION['userType'])) {
                     success: function(res) {
                         document.getElementsByTagName("form")[0].style.display = "none";
                         document.getElementById("conf-msg").style.display = "unset";
-                        jQuery('#conf-msg').html("sd");
+                        jQuery('#conf-msg').html(res);
+                        $('.button1')[0].click();
+                    },
+                    error: function(result) {
+                        console.log(result);
                     }
                 });
             });
@@ -260,6 +265,7 @@ if (isset($_SESSION['userType'])) {
                     contentType: 'application/json',
                     success: function(response) {
                         $('.button1')[0].click();
+                        console.log(response);
                     },
                     dataType: "json",
                     error: function(result) {
@@ -274,21 +280,11 @@ if (isset($_SESSION['userType'])) {
                 if (!formChange) {
                     return undefined;
                 }
-                formChange = false;
                 var confirmationMessage = 'It looks like you have been editing something. ' +
                     'If you leave before saving, your changes will be lost.';
 
                 (e || window.event).returnValue = confirmationMessage; //Gecko + IE
                 return confirmationMessage; //Gecko + Webkit, Safari, Chrome etc.
-            });
-            $(window).bind("popstate", function() {
-                if (location.hash === "#!/tempURL") {
-                    history.replaceState(null, document.title, location.pathname);
-                    //replaces first element of last element of stack with google.com/gmail so can be used further
-                    setTimeout(function() {
-                        location.replace("http://www.yahoo.com/");
-                    }, 0);
-                }
             });
         });
     </script>

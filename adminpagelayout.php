@@ -43,7 +43,7 @@ function getLayout($id, $sort, $order, $page_number)
                     $mainImage = "";
                     foreach ($files as $file) {
                         if (pathinfo($file, PATHINFO_FILENAME) == 'main') {
-                            $mainImage .=  $row['images'] . $file;
+                            $mainImage .=  $row['mainImage'] . $file;
                         }
                     }
                     $result .= "
@@ -51,11 +51,11 @@ function getLayout($id, $sort, $order, $page_number)
                         <td>" . ($i + 1) . ".</td>
                         <td>
                             <div>
-                                <a class='button2' href='#form' nmbr=" . $row['id'] . "><img class='rounded-circle' src='" . $mainImage . "' alt=''></a>
+                                <a class='button2' href='#' nmbr=" . $row['id'] . "><img class='rounded-circle' src='" . $mainImage . "' alt=''></a>
                             </div>
                         </td>
                         <td> " . $row['id'] . "</td>
-                        <td> <a class='button2' href='#form' nmbr=" . $row['id'] . "><span class='name'>" . $row['name'] . "</span></a> </td>
+                        <td> <a class='button2' href='#' nmbr=" . $row['id'] . "><span class='name'>" . $row['name'] . "</span></a> </td>
                         <td> <span class='product'>" . $row['age'] . "</span> </td>
                         <td><span class='count'>" . $row['sex'] . "</span></td>
                         <td>
@@ -77,7 +77,7 @@ function getLayout($id, $sort, $order, $page_number)
                 }
                 $result .= "
                     </div>
-                    <a class='button2' nmbr='new' href='#form' style='text-align: center;'>Dodaj novu životinju</a>
+                    <a class='button2' nmbr='new' href='#' style='text-align: center;'>Dodaj novu životinju</a>
                 ";
                 mysqli_close($conn);
             }
@@ -124,6 +124,7 @@ function getObject($id, $layoutId)
                 while ($type = mysqli_fetch_assoc($queryResultType)) {
                     $result .= "<option value='$type[id]'>$type[type]</option>";
                 }
+                $todayDate = date('Y-m-d', strtotime('today'));
                 $result .=  "</select>
                                     </td>
                                 </tr>
@@ -137,8 +138,12 @@ function getObject($id, $layoutId)
                                     </td>
                                 </tr>
                                 <tr>
+                                    <td><label>Broj godina:</label></td>
+                                    <td><input type='number' name='age' id='age' required /><br /></td>
+                                </tr>
+                                <tr>
                                     <td><label>Datum dolaska:</label></td>
-                                    <td><input type='date' name='date' id='date' oninput=\"this.setCustomValidity('')\" oninvalid=\"this.setCustomValidity('Molimo odaberite datum')\" /><br /></td>
+                                    <td><input type='date' name='arrivalDate' id='arrivalDate' value='$todayDate' required oninput=\"this.setCustomValidity('')\" oninvalid=\"this.setCustomValidity('Molimo odaberite datum')\" /><br /></td>
                                 </tr>
                                 <tr>
                                     <td><label>Vrsta:</label></td>
@@ -157,15 +162,29 @@ function getObject($id, $layoutId)
                                 <tr>
                                     <td><label>Opis:</label></td>
                                     <td>
-                                        <textarea name='desc' cols='150' rows='20'></textarea>
+                                        <textarea name='description' cols='150' rows='20'></textarea>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td><label>Slike:</label></td>
-                                    <td>
-                                        
-                                    </td>
+                                <td>
+                                    <label>Glavna slika:</label></td>
+                                <td>
+                                    <div class='img'>
+                                        <input type='file' id='file' name='mainImage' accept='image/*' enctype='multipart/form-data' required>
+                                    </div>
+                                </td>
                                 </tr>
+                                <tr>
+                                <tr>
+                                    <td>
+                                        <label>Slike:</label></td>
+                                    <td>
+                                        <div class='img'>
+                                            <input type='file' id='file' name='images' accept='image/*' enctype='multipart/form-data' multiple required>
+                                        </div>
+                                    </td>
+                                    </tr>
+                                <tr>
                                 <tr>
                                     <td></td>
                                     <td><input class='button' type='submit' name='submit' id='submit' value='Pošalji' /></td>
@@ -243,7 +262,7 @@ function getObject($id, $layoutId)
                             </tr>
                             <tr>
                                 <td><label>Datum dolaska:</label></td>
-                                <td><input type='date' value='" . $animal['arrivalDate'] . "' name='mail' id='mail' oninput=\"this.setCustomValidity('')\" oninvalid=\"this.setCustomValidity('Molimo odaberite datum')\" /><br /></td>
+                                <td><input type='date' value='" . $animal['arrivalDate'] . "' name='arrivalDate' id='arrivalDate' oninput=\"this.setCustomValidity('')\" oninvalid=\"this.setCustomValidity('Molimo odaberite datum')\" /><br /></td>
                             </tr>
                             <tr>
                                 <td><label>Vrsta:</label></td>
@@ -264,9 +283,9 @@ function getObject($id, $layoutId)
                                     </td>
                             </tr>
                             <tr>
-                                <td><label>Poruka:</label></td>
+                                <td><label>Opis:</label></td>
                                 <td>
-                                    <textarea cols='150' rows='20'>" . $animal['description'] . "</textarea>
+                                    <textarea name='description' cols='150' rows='20'>" . $animal['description'] . "</textarea>
                                 </td>
                             </tr>
                             <tr>
@@ -275,7 +294,7 @@ function getObject($id, $layoutId)
                                 <td>
                                     <div class='img'>
                                         <img src='$mainImage' alt='mainImage'>
-                                        <input type='file' id='file' name='image' accept='image/*' enctype='multipart/form-data'>
+                                        <input type='file' id='mainImage' name='mainImage' accept='image/*' enctype='multipart/form-data'>
                                     </div>
                                 </td>
                                 </tr>
@@ -292,7 +311,7 @@ function getObject($id, $layoutId)
                     }
                     // <img src='$mainImage' alt='mainImage'>
                     $result .= "
-                                        <input type='file' id='file' name='image' accept='image/*' enctype='multipart/form-data' multiple>
+                                        <input type='file' id='images' name='images' accept='image/*' enctype='multipart/form-data' multiple>
                                     </div>
                                 </td>
                                 </tr>
