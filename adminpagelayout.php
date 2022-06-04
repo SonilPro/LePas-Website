@@ -139,7 +139,7 @@ function getObject($id, $layoutId)
                                 </tr>
                                 <tr>
                                     <td><label>Broj godina:</label></td>
-                                    <td><input type='number' name='age' id='age' required /><br /></td>
+                                    <td><input type='number' name='age' id='age' min='1' required /><br /></td>
                                 </tr>
                                 <tr>
                                     <td><label>Datum dolaska:</label></td>
@@ -170,7 +170,8 @@ function getObject($id, $layoutId)
                                     <label>Glavna slika:</label></td>
                                 <td>
                                     <div class='img'>
-                                        <input type='file' id='file' name='mainImage' accept='image/*' enctype='multipart/form-data' required>
+                                        <input type='file' id='mainImage' name='mainImage' accept='image/*' hidden='true' required enctype='multipart/form-data'>
+                                        <img class='plus' src='img/plus.svg'>
                                     </div>
                                 </td>
                                 </tr>
@@ -180,7 +181,8 @@ function getObject($id, $layoutId)
                                         <label>Slike:</label></td>
                                     <td>
                                         <div class='img'>
-                                            <input type='file' id='file' name='images[]' accept='image/*' enctype='multipart/form-data' multiple required>
+                                            <input hidden='true' type='file' id='images' name='images[]' accept='image/*' enctype='multipart/form-data'>
+                                            <img class='plus multiple' src='img/plus.svg'>
                                         </div>
                                     </td>
                                     </tr>
@@ -231,7 +233,7 @@ function getObject($id, $layoutId)
                             </tr>
                             <tr>
                                 <td><label>Ime:</label></td>
-                                <td><input  value=" . $animal['name'] . " type='text' name='firstname' required maxlength='32' oninput=\"this.setCustomValidity('')\" oninvalid=\"this.setCustomValidity('Molimo upišite vaše ime')\" /><br /></td>
+                                <td><input  value=" . $animal['name'] . " type='text' name='name' required maxlength='32' oninput=\"this.setCustomValidity('')\" oninvalid=\"this.setCustomValidity('Molimo upišite vaše ime')\" /><br /></td>
                             </tr>
                             <tr>
                                 <td><label>Životinja:</label></td>
@@ -259,6 +261,10 @@ function getObject($id, $layoutId)
                     $result .= ">Ž</option>
                                 </select>
                             </td>
+                            </tr>
+                            <tr>
+                                <td><label>Broj godina:</label></td>
+                                <td><input type='number' value='" . $animal['age'] . "' name='age' id='age' min='1' required /><br /></td>
                             </tr>
                             <tr>
                                 <td><label>Datum dolaska:</label></td>
@@ -293,8 +299,8 @@ function getObject($id, $layoutId)
                                     <label>Glavna slika:</label></td>
                                 <td>
                                     <div class='img'>
-                                        <img src='$mainImage' alt='mainImage'>
-                                        <input type='file' id='mainImage' name='mainImage' accept='image/*' enctype='multipart/form-data'>
+                                        <img class='plus' style='width:40%' src='$mainImage' alt='mainImage'>
+                                        <input hidden='true' type='file' id='mainImage' name='mainImage' accept='image/*' enctype='multipart/form-data'>
                                     </div>
                                 </td>
                                 </tr>
@@ -303,15 +309,18 @@ function getObject($id, $layoutId)
                                 <td>
                                     <label>Slike:</label></td>
                                 <td>
-                                    <div class='img'>";
+                                    <div class='img multiple'>";
                     foreach ($files as $file) {
                         if (pathinfo($file, PATHINFO_EXTENSION)) {
-                            $result .= "<img src='" . $animal['images'] . $file . "' alt='mainImage'>";
+                            $result .= "<img  style='width:40%' src='" . $animal['images'] . $file . "' alt='mainImage'>";
                         }
                     }
                     // <img src='$mainImage' alt='mainImage'>
                     $result .= "
-                                        <input type='file' id='images' name='images' accept='image/*' enctype='multipart/form-data' multiple>
+                                        <input type='file' id='images' name='images[]' accept='image/*' enctype='multipart/form-data' hidden='true'>
+                                        <img hidden='true' class='plus multiple' src='img/plus.svg'>
+                                        <a href='' style='width:70%' class='reset'>Ponovo odaberi slike</a>
+                                        <p hidden='true' class='errorMsg'>Molimo unesite barem jednu sliku</p>
                                     </div>
                                 </td>
                                 </tr>

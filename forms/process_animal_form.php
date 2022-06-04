@@ -28,7 +28,6 @@ if (isset($_POST['id'])) {
     $mainImage = "";
     $breed = "";
     $images = "";
-
     if (isset($_POST['id'])) {
         $id = $_POST['id'];
     } else return;
@@ -55,10 +54,10 @@ if (isset($_POST['id'])) {
     } else return;
     if (isset($_FILES['mainImage']['name'])) {
         $mainImage = $_FILES['mainImage']['name'];
-    } else return;
+    };
     if (isset($_FILES['images']['name'])) {
         $images = $_FILES['images']['name'];
-    } else return;
+    };
     if (isset($_POST['breed'])) {
         $breed = $_POST['breed'];
         if ($id == 'New') {
@@ -67,7 +66,7 @@ if (isset($_POST['id'])) {
                 $result = "Cannot connect to database";
             } else {
                 $getQuery = "INSERT INTO animals(name, type_id, size_id, age, sex, arrivalDate, description, breed) 
-                            VALUES('$name', '$type', $size, $age, '$sex', '$arrivalDate', '$description', '$breed')";
+                            VALUES('$name', $type, $size, $age, '$sex', '$arrivalDate', '$description', '$breed')";
                 if (mysqli_query($conn, $getQuery) === TRUE) {
 
                     $getQuery = "SELECT * FROM animals ORDER BY inputTimestamp DESC LIMIT 1";
@@ -97,7 +96,7 @@ if (isset($_POST['id'])) {
                     $getQuery = "UPDATE animals SET images = 'img/animals/$createdAnimalId/', mainImage = 'img/animals/$createdAnimalId/mainImg/'
                                     WHERE id = '$createdAnimalId'";
                     if (mysqli_query($conn, $getQuery)) {
-                        //$result = "Animal added successfully";
+                        $result = "Animal added successfully";
                     } else {
                         $result = "Problem with updating images";
                     }
@@ -107,6 +106,63 @@ if (isset($_POST['id'])) {
                 mysqli_close($conn);
             }
         } else {
+            include('../db/connection.php');
+            if (!$conn) {
+                $result = "Cannot connect to database";
+            } else {
+                $getQuery = "UPDATE animals
+                            SET name = '$name',
+                            type_id = $type,
+                            size_id = $size,
+                            age = $age,
+                            sex = '$sex',
+                            arrivalDate = '$arrivalDate',
+                            description = '$description',
+                            breed = '$breed'
+                            WHERE id = $id";
+                if (mysqli_query($conn, $getQuery) === TRUE) {
+
+                    $imagesTargetDir = "../img/animals/" . $id;
+                    $mainImgTargetDir = "$imagesTargetDir/mainImg/";
+                    mkdir($imagesTargetDir);
+                    mkdir($mainImgTargetDir);
+
+
+                    $countfiles = count($_FILES['mainImage']['name']);
+                    if ($countfiles > 0 && pathinfo($mainImage, PATHINFO_EXTENSION) != null) {
+                        $dirHandle = opendir($mainImgTargetDir);
+                        while ($file = readdir($dirHandle)) {
+                            unlink($mainImgTargetDir . $file);
+                        }
+                        closedir($dirHandle);
+                    }
+                    if (move_uploaded_file($_FILES['mainImage']['tmp_name'], $mainImgTargetDir . 'main.' . pathinfo($mainImage, PATHINFO_EXTENSION))) {
+                    } else {
+                        $result = "Image cannot be updated";
+                    }
+
+                    $countfiles = count(array_filter($_FILES['images']['name']));
+                    if ($countfiles > 0) {
+                        $dirHandle = opendir($imagesTargetDir);
+                        while ($file = readdir($dirHandle)) {
+                            unlink($imagesTargetDir . "/" . $file);
+                        }
+                        closedir($dirHandle);
+                    }
+
+                    for ($i = 0; $i < $countfiles; $i++) {
+                        $fileExt = pathinfo($_FILES['images']['name'][$i], PATHINFO_EXTENSION);
+                        if (!move_uploaded_file($_FILES['images']['tmp_name'][$i], $imagesTargetDir . '/' . $i . '.' . $fileExt)) {
+                            $result = "$fileExt . $countfiles";
+                        }
+                    }
+
+                    $result = "Animal updated successfully";
+                } else {
+                    $result = "Error adding animal: " .  mysqli_error($conn);
+                }
+                mysqli_close($conn);
+            }
         }
 
         echo $result;

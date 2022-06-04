@@ -230,30 +230,6 @@ if (isset($_SESSION['userType'])) {
                     }
                 });
             });
-            //FORM SUBMIT
-            $("#content").on("submit", 'form', function(event) {
-                $(":disabled").prop("disabled", false);
-                $("#submit").prop('disabled', true);
-                event.preventDefault();
-                var formdata = new FormData(this);
-                jQuery.ajax({
-                    url: "forms/process_animal_form.php",
-                    type: "POST",
-                    data: formdata,
-                    processData: false,
-                    contentType: false,
-                    success: function(res) {
-                        formChange = false;
-                        document.getElementsByTagName("form")[0].style.display = "none";
-                        document.getElementById("conf-msg").style.display = "unset";
-                        jQuery('#conf-msg').html(res);
-                        $('.button1')[0].click();
-                    },
-                    error: function(result) {
-                        console.log(result);
-                    }
-                });
-            });
             //DELETE
             $('#content').on('click', 'a.delete', function() {
                 if (!confirm("Želite li stvarno obrisati")) {
@@ -280,6 +256,94 @@ if (isset($_SESSION['userType'])) {
                     }
                 });
             });
+            //FORM SUBMIT
+            var images = [];
+            $("#content").on("submit", 'form', function(event) {
+                event.preventDefault();
+
+                $(":disabled").prop("disabled", false);
+                $("#submit").prop('disabled', true);
+
+                var formdata = new FormData(this);
+                $.each(images, function(i, file) {
+                    formdata.append('images[' + i + ']', file);
+                });
+
+                $.ajax({
+                    url: "forms/process_animal_form.php",
+                    type: "POST",
+                    data: formdata,
+                    processData: false,
+                    contentType: false,
+                    success: function(res) {
+                        formChange = false;
+                        document.getElementsByTagName("form")[0].style.display = "none";
+                        document.getElementById("conf-msg").style.display = "unset";
+                        $('#conf-msg').html(res);
+
+                        setTimeout(function() {
+                            window.location.reload();
+                        }, 100);
+                    },
+                    error: function(result) {
+                        console.log(result);
+                    }
+                });
+            });
+            let img = null;
+            var F = null;
+            $('#all').on('change', 'input#mainImage', function(ev) {
+                F = ev.target.files;
+                if (!F || !F[0]) return;
+                if (!(/^image\/(jpe?g|png|gif)$/).test(F[0].type)) return alert('Use images only');
+                img.css("width", "40%");
+                img.one('load', ev => URL.revokeObjectURL(ev.target.src)).prop('src', URL.createObjectURL(F[0]));
+            });
+            $('#all').on('change', 'input#images', function(ev) {
+
+                images.push(ev.target.files[0]);
+                F = ev.target.files;
+                if (!F || !F[0]) return;
+                if (!(/^image\/(jpe?g|png|gif)$/).test(F[0].type)) return alert('Use images only');
+                img.clone().insertAfter(img);
+                img.prop('id', 0);
+                img.removeClass("plus");
+                img.css("width", "40%");
+                img.one('load', ev => URL.revokeObjectURL(ev.target.src)).prop('src', URL.createObjectURL(F[0]));
+                img.after("<a href='#' class='minus'><i class='fas fa-trash'></i></a>");
+            });
+            $('#all').on('click', 'img.plus', function() {
+                img = $(this);
+                if ($(this).hasClass('multiple')) {
+                    $('input#images').click();
+                } else {
+                    $('input#mainImage').click();
+                }
+            });
+            $('#all').on('click', 'a.minus', function(e) {
+                e.preventDefault();
+                var imageId = $(this).attr("id");
+                $.each(images, function(i, file) {
+                    if (images.length < 1) {
+                        $('input#images').val = null;
+                    } else if (i == imageId) {
+                        images.splice(i, 1);
+                    }
+                });
+                $(this).prev().remove();
+                $(this).remove();
+            });
+            $('#all').on('click', 'a.reset', function(e) {
+                e.preventDefault();
+                $('img.plus').prop("hidden", false);
+                $('.img').children('img').not('.plus').remove();
+                $(this).remove();
+            });
+            $('#all').on('change', 'div.img', function() {
+                $.each($(this).children('a'), function(i, ele) {
+                    ele.id = i;
+                });
+            });
             $('#content').on('change', '#form table', function() {
                 formChange = true;
             });
@@ -293,6 +357,11 @@ if (isset($_SESSION['userType'])) {
                 (e || window.event).returnValue = confirmationMessage; //Gecko + IE
                 return confirmationMessage; //Gecko + Webkit, Safari, Chrome etc.
             });
+            // $("#all").on("input", 'input[type="number"]', function() {
+            //     if (/^0/.test(this.value)) {
+            //         this.value = this.value.replace(/^0/, "")
+            //     }
+            // })
         });
     </script>
     <script src="https://kit.fontawesome.com/4705ced167.js" crossorigin="anonymous"></script>

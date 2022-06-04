@@ -1280,8 +1280,15 @@ textarea:focus-visible {
   max-width: 500px;
 }
 .adminpage-wrapper .card form img {
-  width: 40%;
+  width: 10%;
   padding: 4px;
+}
+.adminpage-wrapper .plus {
+  cursor: pointer;
+}
+.adminpage-wrapper .minus {
+  cursor: pointer;
+  width: 20px;
 }
 @media (max-width: 1200px) {
   .adminpage-wrapper .adminpage-nav {
