@@ -89,7 +89,7 @@ if (isset($_SESSION['userType'])) {
             <div class="card form">
                 <?php
                 include_once("adminpagelayout.php");
-                echo getObject('new', 1);
+                echo getObject('New', (isset($_GET['id']) != true) ? 1 : $_GET['id']);
                 ?>
             </div>
         </div>
@@ -124,7 +124,6 @@ if (isset($_SESSION['userType'])) {
                 };
                 var clickBtnValue = $(this).attr('nmbr');
                 var pageValue = $(this).attr('page') == null ? 1 : $(this).attr('page');
-                layout = clickBtnValue;
                 var ajaxurl = 'adminpage.php',
                     data = {
                         id: clickBtnValue,
@@ -147,17 +146,14 @@ if (isset($_SESSION['userType'])) {
 
                         $('.list').html(response);
                         $('.list').html(response);
-                        document.querySelector('#form').scrollIntoView({
-                            behavior: 'smooth'
-                        });
+                        $('a.button2[nmbr=New]').click();
                         history.go(-backLen);
                         setTimeout(function() {
                             if (backLen < 2) {
                                 backLen++;
                             }
                             window.history.pushState({}, "", decodeURIComponent(`${window.location.pathname}?${params}`));
-                        }, 500);
-
+                        }, 100);
                     },
                     dataType: "json",
                     error: function(result) {
@@ -173,11 +169,12 @@ if (isset($_SESSION['userType'])) {
                     }
                     formChange = false;
                 }
-                var clickBtnValue = $(this).attr('nmbr');
+                var id = $(this).attr('nmbr');
+                var layout = $(this).attr('layout');
                 var ajaxurl = 'adminpage.php',
                     data = {
-                        id: clickBtnValue,
-                        edit: 1
+                        id: id,
+                        edit: layout
                     };
                 $.ajax({
                     type: 'POST',
@@ -186,9 +183,9 @@ if (isset($_SESSION['userType'])) {
                     contentType: 'application/json',
                     success: function(response) {
                         $('.form').html(response);
-                        document.querySelector('#form').scrollIntoView({
-                            behavior: 'smooth'
-                        });
+                        // document.querySelector('#form').scrollIntoView({
+                        //     behavior: 'smooth'
+                        // });
                     },
                     dataType: "json",
                     error: function(result) {
@@ -198,12 +195,13 @@ if (isset($_SESSION['userType'])) {
             });
             //SORTING
             $('#content').on('click', 'a.sort', function() {
+                var id = $(this).attr('id');
                 var clickBtnValue = $(this).attr('column');
                 var order = $(this).attr('order');
                 window.$_GET = location.search.substr(1).split("&").reduce((o, i) => (u = decodeURIComponent, [k, v] = i.split("="), o[u(k)] = v && u(v), o), {});
                 var ajaxurl = 'adminpage.php',
                     data = {
-                        id: 1,
+                        id: id,
                         layout: 1,
                         edit: 0,
                         sort: clickBtnValue,
@@ -280,10 +278,10 @@ if (isset($_SESSION['userType'])) {
                         document.getElementsByTagName("form")[0].style.display = "none";
                         document.getElementById("conf-msg").style.display = "unset";
                         $('#conf-msg').html(res);
-
-                        setTimeout(function() {
-                            window.location.reload();
-                        }, 100);
+                        document.location.reload();
+                        // setTimeout(function() {
+                        //     window.location.reload();
+                        // }, 100);
                     },
                     error: function(result) {
                         console.log(result);

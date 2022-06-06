@@ -17,6 +17,15 @@ function deleteObject($objectId, $layoutId)
                     $result = "Error deleting record: " . $conn->error;
                 }
                 break;
+            case 2:
+                $getQuery = "DELETE FROM articles WHERE id=$objectId";
+                if (mysqli_query($conn, $getQuery) === TRUE) {
+                    $result = "Record deleted successfully";
+                    $result = recurseRmdir("img/articles/$objectId");
+                } else {
+                    $result = "Error deleting record: " . $conn->error;
+                }
+                break;
         }
     }
     return $result;

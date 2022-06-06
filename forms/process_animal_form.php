@@ -9,13 +9,6 @@ if ($_SERVER["REQUEST_METHOD"] != "POST") {
     die('Restricted Access');
 }
 if (isset($_POST['id'])) {
-    //NEWS
-    if (isset($_POST['title'])) {
-
-        echo "SUCCESS";
-        return;
-    }
-    //ANIMAL
     $result = "";
     $id = "";
     $name = "";
@@ -33,31 +26,37 @@ if (isset($_POST['id'])) {
     } else return;
     if (isset($_POST['name'])) {
         $name = $_POST['name'];
-    } else return;
+    }
     if (isset($_POST['sex'])) {
         $sex = $_POST['sex'];
-    } else return;
+    }
     if (isset($_POST['age'])) {
         $age = $_POST['age'];
-    } else return;
+    }
     if (isset($_POST['type'])) {
         $type = $_POST['type'];
-    } else return;
+    }
     if (isset($_POST['size'])) {
         $size = $_POST['size'];
-    } else return;
+    }
     if (isset($_POST['arrivalDate'])) {
         $arrivalDate = $_POST['arrivalDate'];
-    } else return;
+    }
     if (isset($_POST['description'])) {
         $description = $_POST['description'];
-    } else return;
+    }
     if (isset($_FILES['mainImage']['name'])) {
         $mainImage = $_FILES['mainImage']['name'];
-    };
+    }
     if (isset($_FILES['images']['name'])) {
         $images = $_FILES['images']['name'];
-    };
+    }
+    if (isset($_POST['title'])) {
+        $title = $_POST['title'];
+    }
+    if (isset($_POST['content'])) {
+        $content = $_POST['content'];
+    }
     if (isset($_POST['breed'])) {
         $breed = $_POST['breed'];
         if ($id == 'New') {
@@ -165,6 +164,79 @@ if (isset($_POST['id'])) {
             }
         }
 
+        echo $result;
+    } else { //ARTICLE
+        if ($id == 'New') {
+            include('../db/connection.php');
+            if (!$conn) {
+                $result = "Cannot connect to database";
+            } else {
+                $date = date("Y-m-d H:i:s");
+                $getQuery = "INSERT INTO articles(title, content, description, lastEdit) 
+                            VALUES('$title', '$content', '$description', '$date')";
+                if (mysqli_query($conn, $getQuery) === TRUE) {
+
+                    $getQuery = "SELECT * FROM articles ORDER BY inputTimestamp DESC LIMIT 1";
+                    $resultq = mysqli_query($conn, $getQuery);
+                    $createdNewsId = "";
+                    while ($row = mysqli_fetch_assoc($resultq)) {
+                        $createdNewsId = $row['id'];
+                    }
+                    $mainImgTargetDir = "../img/articles/" . $createdNewsId;
+                    mkdir($mainImgTargetDir);
+                    if (move_uploaded_file($_FILES['mainImage']['tmp_name'], $mainImgTargetDir . '/main.' . pathinfo($mainImage, PATHINFO_EXTENSION))) {
+                    } else {
+                        $result = $mainImgTargetDir . basename($mainImage);
+                    }
+
+                    $getQuery = "UPDATE articles SET image = 'img/articles/$createdNewsId/'
+                                    WHERE id = '$createdNewsId'";
+                    if (mysqli_query($conn, $getQuery)) {
+                        $result = "Article added successfully";
+                    } else {
+                        $result = "Problem with updating image";
+                    }
+                } else {
+                    $result = "Error adding article: " .  mysqli_error($conn);
+                }
+                mysqli_close($conn);
+            }
+        } else {
+            include('../db/connection.php');
+            if (!$conn) {
+                $result = "Cannot connect to database";
+            } else {
+                $getQuery = "UPDATE articles
+                            SET title = '$title',
+                            content = '$content',
+                            description = '$description',
+                            lastEdit = '" . date("Y-m-d H:i:s") . "'
+                            WHERE id = $id";
+                if (mysqli_query($conn, $getQuery) === TRUE) {
+
+                    $mainImgTargetDir = "../img/articles/" . $id . "/";
+                    mkdir($mainImgTargetDir);
+
+
+                    $countfiles = count($_FILES['mainImage']['name']);
+                    if ($countfiles > 0 && pathinfo($mainImage, PATHINFO_EXTENSION) != null) {
+                        $dirHandle = opendir($mainImgTargetDir);
+                        while ($file = readdir($dirHandle)) {
+                            unlink($mainImgTargetDir . $file);
+                        }
+                        closedir($dirHandle);
+                    }
+                    if (move_uploaded_file($_FILES['mainImage']['tmp_name'], $mainImgTargetDir . 'main.' . pathinfo($mainImage, PATHINFO_EXTENSION))) {
+                        $result = "Article updated successfully";
+                    } else {
+                        $result = "Image cannot be updated";
+                    }
+                } else {
+                    $result = "Error updating article: " .  mysqli_error($conn);
+                }
+                mysqli_close($conn);
+            }
+        }
         echo $result;
     }
     die();

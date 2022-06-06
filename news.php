@@ -43,10 +43,17 @@
         $result = mysqli_query($conn, "SELECT * FROM articles ORDER BY inputTimestamp DESC LIMIT 3");
         for ($i = 0; $i < mysqli_num_rows($result); $i++) {
           $row = mysqli_fetch_assoc($result);
+          $files = array_diff(scandir($row['image']), array('.', '..'));
+          $mainImage = "";
+          foreach ($files as $file) {
+            if (pathinfo($file, PATHINFO_FILENAME) == 'main') {
+              $mainImage .=  $row['image'] . $file;
+            }
+          }
           echo "
           <a class='news-block' href='newspage.php?id=" . $row["id"] . "'>
             <div class='block-wrapper'>
-              <div class='image' style='background-image: url(" . $row["image"] . ");'></div>
+              <div class='image' style='background-image: url($mainImage);'></div>
               <div class='text'>
                 <div class='date-wrapper'>
                   <p class='date'>" . date("j.n.Y.", strtotime($row["inputTimestamp"]))  . "</p>

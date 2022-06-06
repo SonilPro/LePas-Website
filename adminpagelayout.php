@@ -16,12 +16,12 @@ function getLayout($id, $sort, $order, $page_number)
                         <thead>
                             <tr>
                             <th>#</th>
-                                <th><a href='#' class='sort' column='mainImage' order='ASC'>Avatar<i class='fas fa-sort'></i></a></th>
-                                <th><a href='#' class='sort' column='id' order='ASC'>ID<i class='fas fa-sort'></i></a></th>
-                                <th><a href='#' class='sort' column='name' order='ASC'>Ime<i class='fas fa-sort'></i></a></th>
-                                <th><a href='#' class='sort' column='age' order='ASC'>Starost<i class='fas fa-sort'></i></a></th>
-                                <th><a href='#' class='sort' column='sex' order='ASC'>Spol<i class='fas fa-sort'></i></a></th>
-                                <th><a href='#' class='sort' column='names' order='ASC'></a></th>
+                                <th><a href='#' id=1 class='sort' column='mainImage' order='ASC'>Avatar<i class='fas fa-sort'></i></a></th>
+                                <th><a href='#' id=1 class='sort' column='id' order='ASC'>ID<i class='fas fa-sort'></i></a></th>
+                                <th><a href='#' id=1 class='sort' column='name' order='ASC'>Ime<i class='fas fa-sort'></i></a></th>
+                                <th><a href='#' id=1 class='sort' column='age' order='ASC'>Starost<i class='fas fa-sort'></i></a></th>
+                                <th><a href='#' id=1 class='sort' column='sex' order='ASC'>Spol<i class='fas fa-sort'></i></a></th>
+                                <th><a href='#' id=1 class='sort' column='names' order='ASC'></a></th>
                             </tr>
                         </thead>
                         <tbody>";
@@ -51,11 +51,11 @@ function getLayout($id, $sort, $order, $page_number)
                         <td>" . ($i + 1) . ".</td>
                         <td>
                             <div>
-                                <a class='button2' href='#' nmbr=" . $row['id'] . "><img class='rounded-circle' src='" . $mainImage . "' alt=''></a>
+                                <a class='button2' layout='1' href='#' nmbr=" . $row['id'] . "><img class='rounded-circle' src='" . $mainImage . "' alt=''></a>
                             </div>
                         </td>
                         <td> " . $row['id'] . "</td>
-                        <td> <a class='button2' href='#' nmbr=" . $row['id'] . "><span class='name'>" . $row['name'] . "</span></a> </td>
+                        <td> <a class='button2' layout='1' href='#' nmbr=" . $row['id'] . "><span class='name'>" . $row['name'] . "</span></a> </td>
                         <td> <span class='product'>" . $row['age'] . "</span> </td>
                         <td><span class='count'>" . $row['sex'] . "</span></td>
                         <td>
@@ -77,25 +77,92 @@ function getLayout($id, $sort, $order, $page_number)
                 }
                 $result .= "
                     </div>
-                    <a class='button2' nmbr='new' href='#' style='text-align: center;'>Dodaj novu životinju</a>
+                    <a class='button2' layout='1' nmbr='New' href='#' style='text-align: center;'>Dodaj novu životinju</a>
                 ";
                 mysqli_close($conn);
             }
             break;
         case 2:
             $result = "
-                    <h2>2</h2>
+                    <table class='table'>
+                        <thead>
+                            <tr>
+                            <th>#</th>
+                                <th><a href='#' id=2 class='sort' column='image' order='ASC'>Image<i class='fas fa-sort'></i></a></th>
+                                <th><a href='#' id=2 class='sort' column='id' order='ASC'>ID<i class='fas fa-sort'></i></a></th>
+                                <th><a href='#' id=2 class='sort' column='title' order='ASC'>Naslov<i class='fas fa-sort'></i></a></th>
+                                <th><a href='#' id=2 class='sort' column='lastEdit' order='ASC'>Naslov<i class='fas fa-sort'></i></a></th>
+                                <th><a href='#'></a></th>
+                            </tr>
+                        </thead>
+                        <tbody>";
+            include('db/connection.php');
+            if (!$conn) {
+                $result = "Cannot connect to database";
+            } else {
+                $limit = 10;
+                $getQuery = "SELECT * FROM articles";
+                $queryResult = mysqli_query($conn, $getQuery);
+                $total_rows = mysqli_num_rows($queryResult);
+                $total_pages = ceil($total_rows / $limit);
+                $initial_page = ($page_number - 1) * $limit;
+                $resultq = mysqli_query($conn, "SELECT * FROM ( SELECT * FROM articles LIMIT $initial_page, $limit)AS a WHERE title LIKE '%%' ORDER BY $sort $order");
+
+                for ($i = 0; $i <  mysqli_num_rows($resultq); $i++) {
+                    $row = mysqli_fetch_assoc($resultq);
+                    $files = array_diff(scandir($row['image']), array('.', '..'));
+                    $image = "";
+                    $lastEdit = date('d.m.Y', strtotime($row['lastEdit']));
+                    foreach ($files as $file) {
+                        if (pathinfo($file, PATHINFO_FILENAME) == 'main') {
+                            $image .=  $row['image'] . $file;
+                        }
+                    }
+                    $result .= "
+                    <tr>
+                        <td>" . ($i + 1) . ".</td>
+                        <td>
+                            <div>
+                                <a class='button2' href='#' layout='2' nmbr=" . $row['id'] . "><img class='rounded-circle' src='" . $image . "' alt=''></a>
+                            </div>
+                        </td>
+                        <td> " . $row['id'] . "</td>
+                        <td> <a class='button2' href='#' layout='2' nmbr=" . $row['id'] . "><span class='name'>" . $row['title'] . "</span></a> </td>
+                        <td><span class='count'>" . $lastEdit . "</span></td>
+                        <td>
+                            <a href='#' class='delete' id=" . $row['id'] . "><i class='fas fa-trash'></i></a>
+                        </td>
+                    </tr>
+                    ";
+                }
+                $result .=
+                    "</tbody>
+                    </table>
+                    <div style='text-align: center; display: block'>";
+                for ($pn = 1; $pn <= $total_pages; $pn++) {
+                    if ($pn == $page_number) {
+                        $result .= "<a class='button1' style='color: #e4405f' page='$pn' nmbr='$id' href='#' >$pn</a>";
+                    } else {
+                        $result .= "<a class='button1' page='$pn' nmbr='$id' href='#' >$pn</a>";
+                    }
+                }
+                $result .= "
+                    </div>
+                    <a class='button2' layout='2' nmbr='New' href='#' style='text-align: center;'>Dodaj novu životinju</a>
                 ";
+                mysqli_close($conn);
+            }
             break;
     }
     return $result;
 }
+
 function getObject($id, $layoutId)
 {
     $result = "";
     switch ($layoutId) {
         case 1:
-            if ($id == 'new') {
+            if ($id == 'New') {
                 include('db/connection.php');
                 if (!$conn) {
                     $result = "Cannot connect to database";
@@ -264,7 +331,7 @@ function getObject($id, $layoutId)
                             </tr>
                             <tr>
                                 <td><label>Broj godina:</label></td>
-                                <td><input type='number' value='" . $animal['age'] . "' name='age' id='age' min='1' required /><br /></td>
+                                <td><input type='number' value='" . $animal['age'] . "' name='age' id='age' min='1'  /><br /></td>
                             </tr>
                             <tr>
                                 <td><label>Datum dolaska:</label></td>
@@ -272,7 +339,7 @@ function getObject($id, $layoutId)
                             </tr>
                             <tr>
                                 <td><label>Vrsta:</label></td>
-                                <td><input value='" . $animal['breed'] . "' type='text' name='breed' id='breed' required /><br /></td>
+                                <td><input value='" . $animal['breed'] . "' type='text' name='breed' id='breed' /><br /></td>
                             </tr>
                             <tr>
                                     <td><label>Veličina:</label></td>
@@ -340,7 +407,130 @@ function getObject($id, $layoutId)
             }
             break;
         case 2:
-            $result = "News";
+            if ($id == 'New') {
+                include('db/connection.php');
+                if (!$conn) {
+                    $result = "Cannot connect to database";
+                    return $result;
+                }
+                $result = "
+                        <form id='form' action='#' method='post'>
+
+                        <h3>Obrazac za dodavanje novosti</h3>
+                        <table cellspacing='30px'>
+                        <tbody>
+                            <tr>
+                                <td><label>Id:</label></td>
+                                <td><input style='border: none'  value='New' type='text' name='id' disabled='disabled'/><br /></td>
+                            </tr>
+                            <tr>
+                                <td><label>Naslov:</label></td>
+                                <td><input  value='' type='text' name='title' required maxlength='32' oninput=\"this.setCustomValidity('')\" oninvalid=\"this.setCustomValidity('Molimo upišite vaše ime')\" /><br /></td>
+                            </tr>
+                            <tr>
+                                <td><label>Opis:</label></td>
+                                <td>
+                                    <textarea name='description' cols='150' rows='5'></textarea>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><label>Sadržaj:</label></td>
+                                <td>
+                                    <textarea name='content' cols='150' rows='20'></textarea>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label>Slika:</label></td>
+                                <td>
+                                <div class='img'>
+                                    <input type='file' id='mainImage' name='mainImage' accept='image/*' hidden='true' required enctype='multipart/form-data'>
+                                    <img class='plus' src='img/plus.svg'>
+                                </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td><input class='button' type='submit' name='submit' id='submit' value='Pošalji' /></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    </form>
+                    <div id='conf-msg'>
+                        <h3>Forma je poslana!</h3>
+                    </div>
+                ";
+                mysqli_close($conn);
+                break;
+            }
+            include('db/connection.php');
+            if (!$conn) {
+                $result = "Cannot connect to database";
+            } else {
+                $stmt = mysqli_prepare($conn, "SELECT * FROM articles WHERE id = ?");
+                mysqli_stmt_bind_param($stmt, "i", $id);
+                mysqli_stmt_execute($stmt);
+                $sqlResult = mysqli_stmt_get_result($stmt);
+
+                while ($article = mysqli_fetch_assoc($sqlResult)) {
+                    $files = array_diff(scandir($article['image']), array('.', '..'));
+                    $mainImage = "";
+                    foreach ($files as $file) {
+                        if (pathinfo($file, PATHINFO_FILENAME) == 'main') {
+                            $mainImage .=  $article['image'] . $file;
+                        }
+                    }
+                    $result = "
+                    <form id='form' action='#' method='post'>
+
+                    <h3>Obrazac za ažuriranje</h3>
+                    <table cellspacing='30px'>
+                        <tbody>
+                            <tr>
+                                <td><label>Id:</label></td>
+                                <td><input style='border: none'  value=" . $article['id'] . " type='text' name='id' disabled='disabled'/><br /></td>
+                            </tr>
+                            <tr>
+                                <td><label>Naslov:</label></td>
+                                <td><input  value=" . $article['title'] . " type='text' name='title'  /><br /></td>
+                            </tr>
+                            <tr>
+                                <td><label>Opis:</label></td>
+                                <td>
+                                    <textarea name='description' cols='150' rows='5'>" . $article['description'] . "</textarea>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><label>Sadržaj:</label></td>
+                                <td>
+                                    <textarea name='content' cols='150' rows='20'>" . $article['content'] . "</textarea>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label>Slika:</label></td>
+                                <td>
+                                    <div class='img'>
+                                        <img class='plus' style='width:40%' src='$mainImage' alt='mainImage'>
+                                        <input hidden='true' type='file' id='mainImage' name='mainImage' accept='image/*' enctype='multipart/form-data'>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td><input class='button' type='submit' name='submit' id='submit' value='Pošalji' /></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </form>
+                <div id='conf-msg'>
+                    <h3>Forma je poslana!</h3>
+                </div>
+                    ";
+                }
+                mysqli_close($conn);
+            }
+            break;
             break;
         default:
             $result = "No object of that type";

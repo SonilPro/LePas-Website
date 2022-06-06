@@ -81,9 +81,16 @@ if (!isset($_GET['id'])) {
             <?php
 
             if ($animalexists) {
+                $files = array_diff(scandir($mainImage), array('.', '..'));
+                $image = "";
+                foreach ($files as $file) {
+                    if (pathinfo($file, PATHINFO_FILENAME) == 'main') {
+                        $image .=  $mainImage . $file;
+                    }
+                }
                 echo "
                 <div class='images'>
-                    <div class='image' style='background-image: url(" . $mainImage . ");'></div>
+                    <div class='image' style='background-image: url($image);'></div>
                 </div>
                 <div class='description'>
                     <h2>" . $name . "</h2>
