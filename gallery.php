@@ -32,18 +32,44 @@
       <h2>Galerija</h2>
     </div>
   </div>
+  <?php
+  define('_DEFVAR', 1);
+  include('db/connection.php');
+  if (!$conn) {
+    echo "<script language='javascript'>";
+    echo "console.log(\"" . mysqli_connect_error() . "\");";
+    echo "</script>";
+  } else {
+    $result = mysqli_query($conn, "SELECT * FROM animals ORDER BY inputTimestamp DESC");
+    $queryResultSize = mysqli_query($conn, "SELECT * FROM animal_sizes");
+  }
+  ?>
   <section class="gallery-wrapper">
     <div class="gallery">
+      <div class="filter">
+        <form>
+          <label>Spol:</label>
+          <select name='sex'>
+            <option value='M'>M</option>
+            <option value='Ž'>Ž</option>
+          </select>
+          <label>Veličina:</label>
+          <select name='size'>
+            <?php
+            while ($size = mysqli_fetch_assoc($queryResultSize)) {
+              echo "<option value='$size[id]'>$size[size]</option>";
+            }
+            ?>
+          </select>
+        </form>
+      </div>
       <div class="cards">
         <?php
-        define('_DEFVAR', 1);
-        include('db/connection.php');
         if (!$conn) {
           echo "<script language='javascript'>";
           echo "console.log(\"" . mysqli_connect_error() . "\");";
           echo "</script>";
         } else {
-          $result = mysqli_query($conn, "SELECT * FROM animals ORDER BY inputTimestamp DESC");
           for ($i = 0; $i < mysqli_num_rows($result); $i++) {
             $row = mysqli_fetch_assoc($result);
             $files = array_diff(scandir($row['mainImage']), array('.', '..'));
@@ -70,6 +96,25 @@
     </div>
   </section>
   <?php include('include/footer.php') ?>
+  <script type="text/javascript" src="js/jquery.js"></script>
+  <script type="text/javascript">
+    $(document).ready(function() {
+      $("form").on("change", function(event) {
+        event.preventDefault();
+        var formdata = new FormData(this);
+        jQuery.ajax({
+          url: "forms/process_gallery_form.php",
+          type: "POST",
+          data: formdata,
+          processData: false,
+          contentType: false,
+          success: function(res) {
+            $(".cards").html(res);
+          }
+        });
+      });
+    });
+  </script>
 </body>
 
 </html>

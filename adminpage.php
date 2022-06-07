@@ -268,7 +268,7 @@ if (isset($_SESSION['userType'])) {
                 });
 
                 $.ajax({
-                    url: "forms/process_animal_form.php",
+                    url: "forms/process_adminpage_form.php",
                     type: "POST",
                     data: formdata,
                     processData: false,

@@ -68,7 +68,7 @@ li {
 
 nav {
   justify-content: space-between;
-  display: flex !important;
+  display: flex;
   align-items: center;
   background-color: #fccbc7;
   background-color: white;
@@ -192,7 +192,7 @@ section {
 
 .socials {
   position: fixed;
-  top: 300px;
+  top: 200px;
   left: 0;
   z-index: 1000;
 }
@@ -572,14 +572,47 @@ footer .social i {
   max-width: 1300px;
   display: flex;
   flex-direction: column;
+  flex-direction: row;
   gap: 40px;
   padding-bottom: 50px;
+  width: 100%;
+  justify-content: center;
+}
+.gallery .filter {
+  width: 10%;
+}
+.gallery .filter select {
+  background-color: #d8eaf1;
+  border: none;
+  padding: 0 1em 0 0;
+  margin: 0;
+  width: 100%;
+  font-family: inherit;
+  font-size: inherit;
+  cursor: inherit;
+  line-height: inherit;
+  border: 1px solid black;
+  margin-bottom: 10px;
+}
+.gallery form {
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  border-radius: 20px;
+}
+
+.gallery form select {
+  margin-bottom: 15px;
+  margin-right: 15px;
 }
 
 .gallery .cards {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
+  width: 90%;
+  justify-content: center;
 }
 
 .gallery .card {
@@ -931,6 +964,7 @@ textarea:focus-visible {
   gap: 60px;
   padding: 0px 20px;
   flex: 1;
+  align-items: flex-start;
 }
 .animal-page-wrapper .main .description {
   width: 50%;
@@ -940,6 +974,7 @@ textarea:focus-visible {
   background-color: #fde0e8;
   padding: 20px;
   border-radius: 10px;
+  justify-content: flex-start;
 }
 .animal-page-wrapper .main .description h2 {
   text-align: left;
@@ -948,8 +983,21 @@ textarea:focus-visible {
 .animal-page-wrapper .main .description strong {
   text-align: left;
 }
-.animal-page-wrapper .main .images {
-  width: 50%;
+.animal-page-wrapper .images {
+  width: calc(50% - 15px);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin: 0 0 40px;
+}
+.animal-page-wrapper .images .gallery-nav {
+  width: 96px;
+  order: 0;
+  display: unset;
+}
+.animal-page-wrapper .images .gallery-nav .active {
+  border: 4px solid #f77597;
 }
 .animal-page-wrapper .main .images .image {
   background-size: cover;
@@ -957,6 +1005,14 @@ textarea:focus-visible {
   width: 80%;
   height: 520px;
   margin: 0 auto;
+}
+.animal-page-wrapper .main .images a {
+  background-size: cover;
+  background-position: center center;
+  display: block;
+  height: 96px;
+  border: 2px solid black;
+  margin: 0 0 5px;
 }
 .animal-page-wrapper .main ul {
   margin: 0 0 30px;
@@ -1475,8 +1531,20 @@ textarea:focus-visible {
     width: 100%;
   }
 
+  .gallery {
+    flex-direction: column;
+    align-items: center;
+  }
+  .gallery form {
+    flex-direction: row;
+    align-items: center;
+  }
   .gallery .cards {
     justify-content: center;
+  }
+  .gallery form select {
+    margin-bottom: 0px;
+    margin-right: 15px;
   }
   .achievement {
     flex-direction: column;
@@ -1516,7 +1584,15 @@ textarea:focus-visible {
 }
 @media (max-width: 700px) {
   .animal-page-wrapper .main .images .image {
-    width: 90%;
+    width: 80%;
     height: 300px;
+  }
+  .animal-page-wrapper .images .gallery-nav {
+    width: 50px;
+    order: 0;
+    display: unset;
+  }
+  .animal-page-wrapper .main .images a {
+    height: 50px;
   }
 }

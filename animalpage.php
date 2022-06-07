@@ -49,6 +49,7 @@ if (!isset($_GET['id'])) {
             $size = "";
             $arrivalDate = "";
             $mainImage = "";
+            $images = "";
             $breed = "";
             $animalexists = false;
             define('_DEFVAR', 1);
@@ -74,6 +75,7 @@ if (!isset($_GET['id'])) {
                     $arrivalDate = $animal['arrivalDate'];
                     $mainImage = $animal['mainImage'];
                     $breed = $animal['breed'];
+                    $images = $animal['images'];
                 }
             }
             mysqli_close($conn);
@@ -88,8 +90,18 @@ if (!isset($_GET['id'])) {
                         $image .=  $mainImage . $file;
                     }
                 }
+                $files = array_diff(scandir($images), array('.', '..'));
                 echo "
                 <div class='images'>
+                    <nav class='gallery-nav'>
+                    <a class='' href='#' style='background-image: url($image);' data-image='$image'></a>";
+
+                foreach ($files as $file) {
+                    if (pathinfo($file, PATHINFO_EXTENSION)) {
+                        echo "<a class='' href='#' style='background-image: url(" . $images .  $file . ");' data-image='" . $images . $file . "'></a>";
+                    }
+                }
+                echo "</nav>
                     <div class='image' style='background-image: url($image);'></div>
                 </div>
                 <div class='description'>
@@ -118,6 +130,19 @@ if (!isset($_GET['id'])) {
     <?php include('include/footer.php') ?>
     <script src="https://kit.fontawesome.com/4705ced167.js" crossorigin="anonymous"></script>
     <script src="js/reveal.js"></script>
+    <script type="text/javascript" src="js/jquery.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('.images .gallery-nav a').on('click', function(ele) {
+                var imageUrl = $(this).attr('data-image');
+                $('.images .image').css('background-image', "url(" + imageUrl + ")");
+                $('.images .gallery-nav a').each(function(e) {
+                    $(this).removeClass('active');
+                });
+                $(this).addClass('active');
+            });
+        });
+    </script>
 </body>
 
 </html>

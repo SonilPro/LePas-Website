@@ -35,17 +35,6 @@ if (isset($_POST['phone'])) {
 }
 if (isset($_FILES['images']['name'])) {
     $images = $_FILES['images']['name'];
-    // for ($i = 0; $i < count($images); $i++) {
-    //     move_uploaded_file($_FILES['images']['tmp_name'][$i], 'upload/' . $_FILES['images']['name'][$i]);
-    // }
-    $headers = implode("\r\n", [
-        "MIME-Version: 1.0",
-        "Content-type: text/html; charset=utf-8"
-    ]);
-
-    $headers =  'MIME-Version: 1.0' . "\r\n";
-    $headers .= 'From: antonio.ereiz@gmail.com' . "\r\n";
-    $headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
 
     $image_contents = file_get_contents('img/newsImg.jpg');
     $type = pathinfo('img/newsImg.jpg', PATHINFO_EXTENSION);
@@ -62,7 +51,7 @@ if (isset($_FILES['images']['name'])) {
     //SMTP::DEBUG_OFF = off (for production use)
     //SMTP::DEBUG_CLIENT = client messages
     //SMTP::DEBUG_SERVER = client and server messages
-    $mail->SMTPDebug = 4;
+    $mail->SMTPDebug = 0;
 
     //Set the hostname of the mail server
     $mail->Host = 'smtp.gmail.com';
@@ -84,10 +73,10 @@ if (isset($_FILES['images']['name'])) {
     $mail->SMTPAuth = true;
 
     //Username to use for SMTP authentication - use full email address for gmail
-    $mail->Username = '';
+    $mail->Username = 'lepastest@gmail.com';
 
     //Password to use for SMTP authentication
-    $mail->Password = '';
+    $mail->Password = 'ipmbscgfckajihlk';
 
     //Set who the message is to be sent from
     //Note that with gmail you can only use your account address (same as `Username`)
@@ -114,7 +103,9 @@ if (isset($_FILES['images']['name'])) {
     $mail->AltBody = 'This is a plain-text message body';
 
     //Attach an image file
-    $mail->addAttachment('img/newsImg.jpg');
+    for ($i = 0; $i < count($images); $i++) {
+        $mail->addAttachment($_FILES['images']['tmp_name'][$i], $_FILES['images']['name'][$i]);
+    }
 
     //send the message, check for errors
     if (!$mail->send()) {
