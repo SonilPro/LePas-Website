@@ -24,6 +24,8 @@
                         <li><a href="gallery.php">Galerija</a></li>
                         <li><a href="news.php">Novosti</a></li>
                         <li><a href="donation.php">Donacije</a></li>
+                        <li><a href="volounteer.php">Volontiraj</a></li>
+                        <li><a href="adminpage.php">Admin</a></li>
                     </ul>
                 </ul>
             </div>

@@ -68,10 +68,8 @@ if (isset($_SESSION['userType'])) {
             </label>
             <ul>
                 <li><a href="#" class="button1" nmbr=1>Životinje</a></li>
-                <li><a href="#" class="button1" nmbr=2>Dodaj</a></li>
-                <li><a href="#" class="button1" nmbr=3>Dodaj</a></li>
-                <li><a href="#" class="button1" nmbr=4>Dodaj</a></li>
-                <li><a href="#" class="button1" nmbr=5>Dodaj</a></li>
+                <li><a href="#" class="button1" nmbr=2>Novosti</a></li>
+                <li style="margin-top: 75vh;"><a href="#" class="logout">Logout</a></li>
             </ul>
         </aside>
         <div id="content">
@@ -355,11 +353,20 @@ if (isset($_SESSION['userType'])) {
                 (e || window.event).returnValue = confirmationMessage; //Gecko + IE
                 return confirmationMessage; //Gecko + Webkit, Safari, Chrome etc.
             });
-            // $("#all").on("input", 'input[type="number"]', function() {
-            //     if (/^0/.test(this.value)) {
-            //         this.value = this.value.replace(/^0/, "")
-            //     }
-            // })
+            $(document).ready(function() {
+                $('.logout').click(function() {
+                    var clickBtnValue = $(this).val();
+                    var ajaxurl = 'functions/logout.php',
+                        data = {
+                            action: "logout"
+                        };
+                    console.log(data);
+                    $.post(ajaxurl, data, function(response) {
+                        // Response div goes here.
+                        window.location.replace("login.php")
+                    });
+                });
+            });
         });
     </script>
     <script src="https://kit.fontawesome.com/4705ced167.js" crossorigin="anonymous"></script>

@@ -69,47 +69,54 @@
     </div>
   </div>
   <hr>
-  <section class="gallery-wrapper">
-    <div class="section-title">
-      <div class="line reveal"></div>
-      <h2>Novi članovi</h2>
-    </div>
-    <div class="gallery">
-      <div class="cards">
-        <?php
-        define('_DEFVAR', 1);
-        include('db/connection.php');
-        if (!$conn) {
-          echo "<script language='javascript'>";
-          echo "console.log(\"" . mysqli_connect_error() . "\");";
-          echo "</script>";
-        } else {
-          $result = mysqli_query($conn, "SELECT * FROM animals ORDER BY inputTimestamp DESC LIMIT 3");
-          for ($i = 0; $i < mysqli_num_rows($result); $i++) {
-            $row = mysqli_fetch_assoc($result);
-            $files = array_diff(scandir($row['mainImage']), array('.', '..'));
-            $mainImage = "";
-            foreach ($files as $file) {
-              if (pathinfo($file, PATHINFO_FILENAME) == 'main') {
-                $mainImage .=  $row['mainImage'] . $file;
-              }
-            }
-            echo "
-            <div class='card' style='background-image: url(" . $mainImage . ")'>
-              <a href='animalpage.php?id=" . $row["id"] . "'>
-                <div class='description'>
-                  <h3>" . $row["name"] . "</h3>
-                </div>
-              </a>
+  <?php
+  define('_DEFVAR', 1);
+  include('db/connection.php');
+  if (!$conn) {
+    echo "<script language='javascript'>";
+    echo "console.log(\"" . mysqli_connect_error() . "\");";
+    echo "</script>";
+  } else {
+    $result = mysqli_query($conn, "SELECT * FROM animals ORDER BY inputTimestamp DESC LIMIT 3");
+    if (mysqli_num_rows($result) > 0) {
+      echo "
+            <section class='gallery-wrapper'>
+            <div class='section-title'>
+              <div class='line reveal'></div>
+              <h2>Novi članovi</h2>
             </div>
+            <div class='gallery'>
+              <div class='cards'>
             ";
+      for ($i = 0; $i < mysqli_num_rows($result); $i++) {
+        $row = mysqli_fetch_assoc($result);
+        $files = array_diff(scandir($row['mainImage']), array('.', '..'));
+        $mainImage = "";
+        foreach ($files as $file) {
+          if (pathinfo($file, PATHINFO_FILENAME) == 'main') {
+            $mainImage .=  $row['mainImage'] . $file;
           }
-          mysqli_close($conn);
         }
-        ?>
-      </div>
-    </div>
-  </section>
+        echo "
+              <div class='card' style='background-image: url(" . $mainImage . ")'>
+                <a href='animalpage.php?id=" . $row["id"] . "'>
+                  <div class='description'>
+                      <h3>" . $row["name"] . "</h3>
+                  </div>
+                </a>
+              </div>
+             ";
+      }
+      echo "
+        </div>
+        </div>
+      </section>
+      ";
+    }
+
+    mysqli_close($conn);
+  }
+  ?>
   <section class="achievement-wrapper">
     <div class="achievement">
       <div>
@@ -124,51 +131,58 @@
       </div>
     </div>
   </section>
-  <section class="news-wrapper">
-    <div class="section-title">
-      <div class="line reveal"></div>
-      <h2>Novosti</h2>
-    </div>
-    <div class="news">
-      <?php
-      include('db/connection.php');
-      if (!$conn) {
-        echo "<script language='javascript'>";
-        echo "console.log(\"" . mysqli_connect_error() . "\");";
-        echo "</script>";
-      } else {
-        $result = mysqli_query($conn, "SELECT * FROM articles ORDER BY inputTimestamp DESC LIMIT 3");
-        for ($i = 0; $i < mysqli_num_rows($result); $i++) {
-          $row = mysqli_fetch_assoc($result);
-          $files = array_diff(scandir($row['image']), array('.', '..'));
-          $mainImage = "";
-          foreach ($files as $file) {
-            if (pathinfo($file, PATHINFO_FILENAME) == 'main') {
-              $mainImage .=  $row['image'] . $file;
-            }
-          }
-          echo "
-          <a class='news-block' href='newspage.php?id=" . $row["id"] . "'>
-            <div class='block-wrapper'>
-              <div class='image' style='background-image: url($mainImage);'></div>
-              <div class='text'>
-                <div class='date-wrapper'>
-                  <p class='date'>" . date("j.n.Y.", strtotime($row["inputTimestamp"]))  . "</p>
-              </div>
-                <h3 class='title'>" . $row["title"] . "</h3>
-                <p class='summary'>
-                  " . $row["description"] . "
-                </p>
-              </div>
+
+  <?php
+  include('db/connection.php');
+  if (!$conn) {
+    echo "<script language='javascript'>";
+    echo "console.log(\"" . mysqli_connect_error() . "\");";
+    echo "</script>";
+  } else {
+    $result = mysqli_query($conn, "SELECT * FROM articles ORDER BY inputTimestamp DESC LIMIT 3");
+    if (mysqli_num_rows($result) > 0) {
+      echo "
+          <section class='news-wrapper'>
+            <div class='section-title'>
+            <div class='line reveal'></div>
+              <h2>Novosti</h2>
             </div>
-          </a>
-            ";
+            <div class='news'>
+          ";
+      for ($i = 0; $i < mysqli_num_rows($result); $i++) {
+        $row = mysqli_fetch_assoc($result);
+        $files = array_diff(scandir($row['image']), array('.', '..'));
+        $mainImage = "";
+        foreach ($files as $file) {
+          if (pathinfo($file, PATHINFO_FILENAME) == 'main') {
+            $mainImage .=  $row['image'] . $file;
+          }
         }
-        mysqli_close($conn);
+        echo "
+                <a class='news-block' href='newspage.php?id=" . $row["id"] . "'>
+                  <div class='block-wrapper'>
+                    <div class='image' style='background-image: url($mainImage);'></div>
+                    <div class='text'>
+                      <div class='date-wrapper'>
+                        <p class='date'>" . date("j.n.Y.", strtotime($row["inputTimestamp"]))  . "</p>
+                    </div>
+                      <h3 class='title'>" . $row["title"] . "</h3>
+                      <p class='summary'>
+                        " . $row["description"] . "
+                      </p>
+                    </div>
+                  </div>
+                </a>
+                  ";
       }
-      ?>
-    </div>
-  </section>
+      echo "
+      </div>
+    </section>
+    ";
+    }
+    mysqli_close($conn);
+  }
+  ?>
   <hr>
   <section class="instagram-wrapper">
     <div data-mc-src="6459abf6-4213-4a7d-8e22-06413a50a4a9#instagram"></div>

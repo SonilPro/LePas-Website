@@ -61,6 +61,7 @@
             }
             ?>
           </select>
+          <a href="#">Poništi</a>
         </form>
       </div>
       <div class="cards">
@@ -106,6 +107,17 @@
           url: "forms/process_gallery_form.php",
           type: "POST",
           data: formdata,
+          processData: false,
+          contentType: false,
+          success: function(res) {
+            $(".cards").html(res);
+          }
+        });
+      });
+      $("form a").on("click", function() {
+        jQuery.ajax({
+          url: "forms/process_gallery_form.php",
+          type: "POST",
           processData: false,
           contentType: false,
           success: function(res) {

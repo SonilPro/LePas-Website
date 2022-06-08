@@ -29,7 +29,7 @@
             <?php
             $title = "";
             $content = "";
-            $image = "";
+            $mainImage = "";
             $inputTimestamp = "";
             $lastEdit = "";
             $articleexists = false;
@@ -48,7 +48,12 @@
                     $articleexists = true;
                     $title = $article['title'];
                     $content = $article['content'];
-                    $image = $article['image'];
+                    $files = array_diff(scandir($article['image']), array('.', '..'));
+                    foreach ($files as $file) {
+                        if (pathinfo($file, PATHINFO_FILENAME) == 'main') {
+                            $mainImage .=  $article['image'] . $file;
+                        }
+                    }
                     $inputTimestamp = $article['inputTimestamp'];
                     $lastEdit = $article['lastEdit'];
                 }
@@ -57,8 +62,8 @@
             if ($articleexists) {
                 echo "
                     
-                    <h2>7 Rules of Effective Branding</h2>
-                    <img src=" . $image . ">
+                    <h2>$title</h2>
+                    <img src=" . $mainImage . ">
                     <pre>" . $content . "</pre>
                     <p class='date'>" . date("j.n.Y.", $inputTimestamp) . "</p>
                 ";

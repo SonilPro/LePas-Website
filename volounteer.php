@@ -118,7 +118,7 @@
                         <tr>
                             <td><label>Poruka:</label></td>
                             <td>
-                                <textarea cols="30" rows="10"></textarea>
+                                <textarea name="message" cols="30" rows="10"></textarea>
                             </td>
                         </tr>
                         <tr>

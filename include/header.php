@@ -29,6 +29,7 @@ $page = substr($page, 0, strpos($page, "."));
             </li> -->
                     <li class="<?php echo ($page == "donation" ? "current" : "") ?>"><a href="donation.php">Donacije</a></li>
                     <li class="<?php echo ($page == "contact" ? "current" : "") ?>"><a href="contact.php">Kontakt</a></li>
+                    <li class="<?php echo ($page == "volounteer" ? "current" : "") ?>"><a href="volounteer.php">Volontiraj</a></li>
                 </div>
             </ul>
         </nav>

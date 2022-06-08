@@ -367,7 +367,7 @@ section {
 
 .news-block {
   text-align: left;
-  width: 30%;
+
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -396,6 +396,7 @@ section {
 .news-block .text {
   padding: 0px 10px;
   gap: 5px;
+  max-width: 400px;
 }
 
 .news-block .date {
@@ -579,7 +580,7 @@ footer .social i {
   justify-content: center;
 }
 .gallery .filter {
-  width: 10%;
+  width: 15%;
 }
 .gallery .filter select {
   background-color: #d8eaf1;
@@ -593,6 +594,7 @@ footer .social i {
   line-height: inherit;
   border: 1px solid black;
   margin-bottom: 10px;
+  border-radius: 10px;
 }
 .gallery form {
   padding: 10px;
@@ -1535,9 +1537,12 @@ textarea:focus-visible {
     flex-direction: column;
     align-items: center;
   }
+  .gallery .filter {
+    width: 40%;
+  }
   .gallery form {
-    flex-direction: row;
-    align-items: center;
+    align-items: flex-start;
+    gap: 10px;
   }
   .gallery .cards {
     justify-content: center;

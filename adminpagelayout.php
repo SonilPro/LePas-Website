@@ -148,7 +148,7 @@ function getLayout($id, $sort, $order, $page_number)
                 }
                 $result .= "
                     </div>
-                    <a class='button2' layout='2' nmbr='New' href='#' style='text-align: center;'>Dodaj novu životinju</a>
+                    <a class='button2' layout='2' nmbr='New' href='#' style='text-align: center;'>Dodaj novi članak</a>
                 ";
                 mysqli_close($conn);
             }

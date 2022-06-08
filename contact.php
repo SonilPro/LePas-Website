@@ -56,7 +56,7 @@
               <tr>
                 <td><label>Poruka:</label></td>
                 <td>
-                  <textarea cols="30" rows="10"></textarea>
+                  <textarea name="message" cols="30" rows="10"></textarea>
                 </td>
               </tr>
               <tr>
@@ -98,6 +98,28 @@
   <?php include('include/footer.php') ?>
   <script src="https://kit.fontawesome.com/4705ced167.js" crossorigin="anonymous"></script>
   <script src="js/reveal.js"></script>
+  <script type="text/javascript" src="js/jquery.js"></script>
+  <script type="text/javascript">
+    $(document).ready(function() {
+      $("form").on("submit", function(event) {
+        event.preventDefault();
+
+        var formdata = new FormData(this);
+        jQuery.ajax({
+          url: "process_form.php",
+          type: "POST",
+          data: formdata,
+          processData: false,
+          contentType: false,
+          success: function(res) {
+            document.getElementsByTagName("form")[0].style.display = "none";
+            document.getElementById("conf-msg").style.display = "unset";
+            jQuery('#conf-msg').html(res);
+          }
+        });
+      });
+    });
+  </script>
 </body>
 
 </html>
