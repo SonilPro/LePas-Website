@@ -6,7 +6,7 @@
                 <address>
                     Ul. Slavka Kolara 33<br>
                     10410 Velika Gorica
-                    <a href="https://goo.by/BQYpk" target="_blank">Dohvati upute</a>
+                    <a href="https://goo.by/BQYpk" target="_blank">Google karta</a>
                 </address>
                 <div class="numbers">
                     Tel: <a href="tel:098 139 7298">098-139-7298</a><br>

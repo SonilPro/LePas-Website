@@ -65,7 +65,7 @@
                     <h2>$title</h2>
                     <img src=" . $mainImage . ">
                     <pre>" . $content . "</pre>
-                    <p class='date'>" . date("j.n.Y.", $inputTimestamp) . "</p>
+                    <p class='date'>" . date("j.n.Y.", strtotime($inputTimestamp)) . "</p>
                 ";
             }
 

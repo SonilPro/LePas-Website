@@ -62,8 +62,7 @@
         <p>Možete uskočiti s potrebnim prijevozima šapica od utočišta ili trenutne čuvalice do veterinara i natrag.</p>
         <br />
         <p>
-          Za ostale donacije javite nam se na e-mail: udruga@lepas.hr radi dogovora oko preuzimanja donacije. Donacije
-          također možete poslati putem pošte na adresu: .
+          Za ostale donacije javite nam se na e-mail: udruga@lepas.hr radi dogovora oko preuzimanja donacije.
         </p>
       </div>
       <img src="img/about3.jpg" style="width: 100%">
