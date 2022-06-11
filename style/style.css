@@ -670,7 +670,8 @@ footer .social i {
 }
 
 .contact {
-  max-width: 1000px;
+  max-width: 1200px;
+  width: 90%;
   display: flex;
   gap: 40px;
 }
@@ -709,7 +710,7 @@ footer .social i {
 }
 
 .contact .form {
-  width: 50%;
+  width: 70%;
 }
 form {
   text-align: left;
@@ -771,7 +772,7 @@ textarea:focus-visible {
 }
 
 .contact .info {
-  width: 50%;
+  width: 30%;
   text-align: left;
   margin-top: 25px;
   display: flex;
@@ -1121,7 +1122,9 @@ textarea:focus-visible {
   color: rgb(71, 71, 71);
 }
 .news-page-wrapper .main img {
-  height: 400px;
+  height: auto;
+  width: 100%;
+  max-width: 700px;
 }
 .news-page-wrapper .main pre {
   width: 60%;

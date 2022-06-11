@@ -94,11 +94,11 @@ if (!isset($_GET['id'])) {
                 echo "
                 <div class='images'>
                     <nav class='gallery-nav'>
-                    <a class='' href='#' style='background-image: url($image);' data-image='$image'></a>";
+                    <a class='' href='' style='background-image: url($image);' data-image='$image'></a>";
 
                 foreach ($files as $file) {
                     if (pathinfo($file, PATHINFO_EXTENSION)) {
-                        echo "<a class='' href='#' style='background-image: url(" . $images .  $file . ");' data-image='" . $images . $file . "'></a>";
+                        echo "<a class='' href='' style='background-image: url(" . $images .  $file . ");' data-image='" . $images . $file . "'></a>";
                     }
                 }
                 echo "</nav>
@@ -134,6 +134,7 @@ if (!isset($_GET['id'])) {
     <script type="text/javascript">
         $(document).ready(function() {
             $('.images .gallery-nav a').on('click', function(ele) {
+                ele.preventDefault();
                 var imageUrl = $(this).attr('data-image');
                 $('.images .image').css('background-image', "url(" + imageUrl + ")");
                 $('.images .gallery-nav a').each(function(e) {

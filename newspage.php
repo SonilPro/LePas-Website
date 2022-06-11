@@ -63,7 +63,7 @@
                 echo "
                     
                     <h2>$title</h2>
-                    <img src=" . $mainImage . ">
+                    <img src=" . (empty($mainImage) ? "img/newsImg.jpg" : "url($mainImage)")  . ">
                     <pre>" . $content . "</pre>
                     <p class='date'>" . date("j.n.Y.", strtotime($inputTimestamp)) . "</p>
                 ";
