@@ -51,8 +51,11 @@
         <form>
           <select name='type'>
             <option value='-1'>Vrsta:</option>
-            <option value=''>Pas</option>
-            <option value='Ž'>Mačka</option>
+            <?php
+            while ($type = mysqli_fetch_assoc($queryResultType)) {
+              echo "<option value='$type[id]'>$type[type]</option>";
+            }
+            ?>
           </select>
           <select name='sex'>
             <option value='-1'>Spol:</option>
@@ -61,11 +64,6 @@
           </select>
           <select name='size'>
             <option value='-1'>Veličina:</option>
-            <?php
-            while ($type = mysqli_fetch_assoc($queryResultType)) {
-              echo "<option value='$type[id]'>$type[type]</option>";
-            }
-            ?>
             <?php
             while ($size = mysqli_fetch_assoc($queryResultSize)) {
               echo "<option value='$size[id]'>$size[size]</option>";
