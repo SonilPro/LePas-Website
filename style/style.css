@@ -22,7 +22,10 @@ header {
   align-items: center;
   gap: 50px;
 }
-
+h4 {
+  font-size: 1.3rem;
+  color: #fa4b7a;
+}
 header {
   display: flex !important;
   justify-content: center;
@@ -715,6 +718,7 @@ form {
   text-align: left;
   background-color: #e7f1f5;
   border-radius: 20px;
+  padding: 10px;
 }
 form table {
   width: 100%;
@@ -961,6 +965,8 @@ textarea:focus-visible {
   background-color: white;
   display: flex;
   justify-content: center;
+  flex-direction: column;
+  align-items: center;
 }
 .animal-page-wrapper .main {
   max-width: 1300px;
@@ -969,6 +975,7 @@ textarea:focus-visible {
   padding: 0px 20px;
   flex: 1;
   align-items: flex-start;
+  width: 100%;
 }
 .animal-page-wrapper .main .description {
   width: 50%;
@@ -1039,6 +1046,23 @@ textarea:focus-visible {
   justify-content: space-between;
   border-bottom: 2px dotted rgba(27, 28, 29, 0.5);
   padding: 10px 0;
+}
+.animal-page-wrapper .adopt {
+  max-width: 1300px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+.animal-page-wrapper .adopt .text {
+  width: 47%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  justify-content: space-around;
+}
+.animal-page-wrapper .adopt form {
+  width: 47%;
 }
 .section-title h2 {
   background: inherit;

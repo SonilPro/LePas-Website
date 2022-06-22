@@ -121,10 +121,58 @@ if (!isset($_GET['id'])) {
                     <h2 style='margin: 0 auto;'>No pet with id: " . htmlspecialchars($_GET['id']) . " found.</h2>
                 ";
             }
-
             ?>
-
-
+        </div>
+        <h4>KAKO UDOMITI PSA ILI MACU?</h4>
+        <div class="adopt">
+            <div class="text">
+                <p>Kao prvi korak u našem procesu zamolit ćemo vas da što detaljnije ispunite naš upitnik za potencijalne udomitelje.</p>
+                <p>Nakon što ga ispunite, naši volonteri javljaju se kroz par dana kako bismo telefonski prošli sve detalje upitnika, informacije o psu te naravno, da odgovorimo na sva vaša potencijalna pitanja. </p>
+                <p>Ukoliko se usuglasimo, njuškicu prije udomljavanja možete doći i upoznati.</p>
+                <p>Svakako je važno da osobno dođete po životinju koju udomljavate popto se prilikom preuzimanja potpisuje ugovor o udomljavanju te sa psom/macom dobivate i sve prateće dokumente.
+                    Kada naš štićenik postane novi član vaše obitelji, kreće proces prilagodbe tijekom kojeg smo također tu za vas kako bismo vam našim savjetom pomogli prebroditi inicijalne izazove do kojih može doći.</p>
+            </div>
+            <form id="form" action="#form" method="post">
+                <h3>Obrazac za privremeni smještaj</h3>
+                <table cellspacing="30px">
+                    <tbody>
+                        <tr>
+                            <td><label>Ime:</label></td>
+                            <td><input type="text" name="firstname" required maxlength="32" oninput="this.setCustomValidity('')" oninvalid="this.setCustomValidity('Molimo upišite vaše ime')" /><br /></td>
+                        </tr>
+                        <tr>
+                            <td><label>Prezime:</label></td>
+                            <td><input type="text" name="lastname" required maxlength="32" oninput="this.setCustomValidity('')" oninvalid="this.setCustomValidity('Molimo upišite vaše prezime')" /><br /></td>
+                        </tr>
+                        <tr>
+                            <td><label>E-mail:</label></td>
+                            <td><input type="email" name="mail" id="mail" oninput="this.setCustomValidity('')" oninvalid="this.setCustomValidity('Email je krivo upisan')" /><br /></td>
+                        </tr>
+                        <tr>
+                            <td><label>Telefon:</label></td>
+                            <td><input type="tel" name="phone" id="phone" required /><br /></td>
+                        </tr>
+                        <tr>
+                            <td><label>Slika/slike smještaja:</label></td>
+                            <td class="file-upload">
+                                <input type="button" id="click-input" value="Dodaj slike" onclick="document.getElementById('file').click();" />
+                                <label for="click-input" id="info" style="height: 10px;"></label>
+                                <input type="file" style="display:none;" id="file" name="images[]" accept="image/*" enctype="multipart/form-data" multiple required>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><label>Poruka:</label></td>
+                            <td>
+                                <textarea name="message" cols="30" rows="10"></textarea>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td><input class="button" type="submit" name="submit" id="submit" value="Pošalji" /></td>
+                        </tr>
+                    </tbody>
+                </table>
+        </div>
         </div>
     </section>
     <?php include('include/footer.php') ?>
