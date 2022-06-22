@@ -42,19 +42,28 @@
   } else {
     $result = mysqli_query($conn, "SELECT * FROM animals ORDER BY inputTimestamp DESC");
     $queryResultSize = mysqli_query($conn, "SELECT * FROM animal_sizes");
+    $queryResultType = mysqli_query($conn, "SELECT * FROM animal_types");
   }
   ?>
   <section class="gallery-wrapper">
     <div class="gallery">
       <div class="filter">
         <form>
-          <label>Spol:</label>
+          <select name='type'>
+            <option value='-1'>Vrsta:</option>
+            <?php
+            while ($type = mysqli_fetch_assoc($queryResultType)) {
+              echo "<option value='$type[id]'>$type[type]</option>";
+            }
+            ?>
+          </select>
           <select name='sex'>
+            <option value='-1'>Spol:</option>
             <option value='M'>M</option>
             <option value='Ž'>Ž</option>
           </select>
-          <label>Veličina:</label>
           <select name='size'>
+            <option value='-1'>Veličina:</option>
             <?php
             while ($size = mysqli_fetch_assoc($queryResultSize)) {
               echo "<option value='$size[id]'>$size[size]</option>";
@@ -122,6 +131,9 @@
           contentType: false,
           success: function(res) {
             $(".cards").html(res);
+            $("form select").each(function(i, ele) {
+              ele.selectedIndex = 0;
+            })
           }
         });
       });

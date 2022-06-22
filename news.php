@@ -53,7 +53,7 @@
           echo "
           <a class='news-block' href='newspage.php?id=" . $row["id"] . "'>
             <div class='block-wrapper'>
-              <div class='image' style='background-image: url($mainImage);'></div>
+              <div class='image' style='background-image:" . (empty($mainImage) ? "" : "url($mainImage)")  . ";'></div>
               <div class='text'>
                 <div class='date-wrapper'>
                   <p class='date'>" . date("j.n.Y.", strtotime($row["inputTimestamp"]))  . "</p>
