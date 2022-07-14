@@ -94,7 +94,7 @@ if (!isset($_GET['id'])) {
                 echo "
                 <div class='images'>
                     <nav class='gallery-nav'>
-                    <a class='' href='' style='background-image: url($image);' data-image='$image'></a>";
+                    <a class='active' href='' style='background-image: url($image);' data-image='$image'></a>";
 
                 foreach ($files as $file) {
                     if (pathinfo($file, PATHINFO_EXTENSION)) {
@@ -129,11 +129,11 @@ if (!isset($_GET['id'])) {
                 <p>Kao prvi korak u našem procesu zamolit ćemo vas da što detaljnije ispunite naš upitnik za potencijalne udomitelje.</p>
                 <p>Nakon što ga ispunite, naši volonteri javljaju se kroz par dana kako bismo telefonski prošli sve detalje upitnika, informacije o psu te naravno, da odgovorimo na sva vaša potencijalna pitanja. </p>
                 <p>Ukoliko se usuglasimo, njuškicu prije udomljavanja možete doći i upoznati.</p>
-                <p>Svakako je važno da osobno dođete po životinju koju udomljavate popto se prilikom preuzimanja potpisuje ugovor o udomljavanju te sa psom/macom dobivate i sve prateće dokumente.
+                <p>Svakako je važno da osobno dođete po životinju koju udomljavate pošto se prilikom preuzimanja potpisuje ugovor o udomljavanju te sa psom/macom dobivate i sve prateće dokumente.
                     Kada naš štićenik postane novi član vaše obitelji, kreće proces prilagodbe tijekom kojeg smo također tu za vas kako bismo vam našim savjetom pomogli prebroditi inicijalne izazove do kojih može doći.</p>
             </div>
             <form id="form" action="#form" method="post">
-                <h3>Obrazac za privremeni smještaj</h3>
+                <h3>Obrazac za udomljivanje</h3>
                 <table cellspacing="30px">
                     <tbody>
                         <tr>
@@ -152,13 +152,17 @@ if (!isset($_GET['id'])) {
                             <td><label>Telefon:</label></td>
                             <td><input type="tel" name="phone" id="phone" required /><br /></td>
                         </tr>
-                        <tr>
+                        <!-- <tr>
                             <td><label>Slika/slike smještaja:</label></td>
                             <td class="file-upload">
                                 <input type="button" id="click-input" value="Dodaj slike" onclick="document.getElementById('file').click();" />
                                 <label for="click-input" id="info" style="height: 10px;"></label>
                                 <input type="file" style="display:none;" id="file" name="images[]" accept="image/*" enctype="multipart/form-data" multiple required>
                             </td>
+                        </tr> -->
+                        <tr>
+                            <td><label>Ime životinje:</label></td>
+                            <td><input type="text" name="animalName" id="animalName" required /><br /></td>
                         </tr>
                         <tr>
                             <td><label>Poruka:</label></td>
@@ -172,6 +176,10 @@ if (!isset($_GET['id'])) {
                         </tr>
                     </tbody>
                 </table>
+            </form>
+            <div id="conf-msg">
+                <h3>Forma je poslana!</h3>
+            </div>
         </div>
         </div>
     </section>
@@ -189,6 +197,25 @@ if (!isset($_GET['id'])) {
                     $(this).removeClass('active');
                 });
                 $(this).addClass('active');
+            });
+        });
+        $(document).ready(function() {
+            $("form").on("submit", function(event) {
+                event.preventDefault();
+
+                var formdata = new FormData(this);
+                jQuery.ajax({
+                    url: "forms/process_animalpage_form.php",
+                    type: "POST",
+                    data: formdata,
+                    processData: false,
+                    contentType: false,
+                    success: function(res) {
+                        document.getElementsByTagName("form")[0].style.display = "none";
+                        document.getElementById("conf-msg").style.display = "unset";
+                        jQuery('#conf-msg').html(res);
+                    }
+                });
             });
         });
     </script>

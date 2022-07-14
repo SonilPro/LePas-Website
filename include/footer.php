@@ -41,6 +41,8 @@
                 </a>
             </div>
         </div>
-        <p class="copy">© 2022 <a href="#">LePas udruga</a></p>
+        <p class="copy">Izradio <a href="mailto:antonio.ereiz@gmail.com">Antonio Ereiz</a>, student <a href="https://www.tvz.hr/">Tehničkog veleučilišta u Zagrebu</a> kao dio projekta
+            </br>
+            © 2022 <a href="#">LePas udruga</a></p>
     </div>
 </footer>
