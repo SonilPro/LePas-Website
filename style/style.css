@@ -968,11 +968,12 @@ textarea:focus-visible {
   justify-content: center;
   flex-direction: column;
   align-items: center;
+  gap: 40px;
 }
 .animal-page-wrapper .main {
   max-width: 1300px;
   display: flex;
-  gap: 60px;
+  gap: 50px;
   padding: 0px 20px;
   flex: 1;
   align-items: flex-start;
@@ -1053,7 +1054,7 @@ textarea:focus-visible {
   width: 100%;
   display: flex;
   justify-content: space-between;
-  margin-top: 20px;
+  gap: 40px;
 }
 .animal-page-wrapper .adopt .text {
   width: 47%;
@@ -1061,6 +1062,9 @@ textarea:focus-visible {
   flex-direction: column;
   gap: 20px;
   justify-content: space-around;
+}
+.animal-page-wrapper .adopt #conf-msg {
+  width: 47%;
 }
 .animal-page-wrapper .adopt form {
   width: 47%;
@@ -1614,6 +1618,16 @@ textarea:focus-visible {
   }
   .adminpage-wrapper #content {
     margin: unset;
+  }
+  .animal-page-wrapper .adopt {
+    flex-direction: column;
+    align-items: center;
+  }
+  .animal-page-wrapper .adopt .text {
+    width: 90%;
+  }
+  .animal-page-wrapper .adopt form {
+    width: 90%;
   }
 }
 @media (max-width: 700px) {
