@@ -37,7 +37,7 @@
     </div>
     <div class="options">
       <div class="option" style="
-            background-image: url(img/option_adopt.JPEG);
+            background-image: url(img/option_adopt.jpg);
           ">
         <span class="icon">
           <i class="fas fa-paw fa-3x fa-inverse" aria-hidden="true"></i>
