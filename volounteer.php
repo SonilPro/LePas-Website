@@ -207,7 +207,7 @@
 
                 var formdata = new FormData(this);
                 jQuery.ajax({
-                    url: "process_form.php",
+                    url: "forms/process_form.php",
                     type: "POST",
                     data: formdata,
                     processData: false,

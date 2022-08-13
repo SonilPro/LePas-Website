@@ -112,7 +112,7 @@ if (!isset($_GET['id'])) {
                         <li><strong>Veličina:</strong>" . $size . "</li>
                         <li><strong>Pasmina:</strong>" . $breed . "</li>
                         <li><strong>Dana provedenih kod nas:</strong>" . floor((time() - strtotime($arrivalDate)) / 86400) . "</li>
-                        <li><strong>Sex:</strong>" . $sex . "</li>
+                        <li><strong>Spol:</strong>" . $sex . "</li>
                     </ul>
                 </div>
                 ";
